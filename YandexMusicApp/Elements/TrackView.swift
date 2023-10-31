@@ -18,6 +18,7 @@ struct TrackView: View {
 		HStack(spacing: 0) {
 			HStack(spacing: 15) {
 				Text(track.name)
+					.font(.ysTextBody)
 				Spacer()
 				Icons.play
 				Icons.unmute

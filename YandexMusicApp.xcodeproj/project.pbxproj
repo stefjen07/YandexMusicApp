@@ -34,6 +34,12 @@
 		3EEE7E792AF048C000656070 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E782AF048C000656070 /* TrackView.swift */; };
 		3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E7A2AF048D600656070 /* InstrumentButton.swift */; };
 		3EEE7E7D2AF048ED00656070 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E7C2AF048ED00656070 /* Track.swift */; };
+		3EEE7E802AF04FD900656070 /* MusicPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E7F2AF04FD900656070 /* MusicPad.swift */; };
+		3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E822AF06AF700656070 /* CGRect+extension.swift */; };
+		3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E842AF06B0A00656070 /* ClosedRange+extension.swift */; };
+		3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E862AF06B1E00656070 /* Slider.swift */; };
+		3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E8B2AF18F6900656070 /* Font+extension.swift */; };
+		3EEE7E912AF194D500656070 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E902AF194D500656070 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +91,14 @@
 		3EEE7E782AF048C000656070 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		3EEE7E7A2AF048D600656070 /* InstrumentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentButton.swift; sourceTree = "<group>"; };
 		3EEE7E7C2AF048ED00656070 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		3EEE7E7F2AF04FD900656070 /* MusicPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPad.swift; sourceTree = "<group>"; };
+		3EEE7E822AF06AF700656070 /* CGRect+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+extension.swift"; sourceTree = "<group>"; };
+		3EEE7E842AF06B0A00656070 /* ClosedRange+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+extension.swift"; sourceTree = "<group>"; };
+		3EEE7E862AF06B1E00656070 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		3EEE7E8B2AF18F6900656070 /* Font+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+extension.swift"; sourceTree = "<group>"; };
+		3EEE7E8E2AF18F9600656070 /* YandexSansText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YandexSansText-Regular.ttf"; sourceTree = "<group>"; };
+		3EEE7E8F2AF18FE200656070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3EEE7E902AF194D500656070 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +149,8 @@
 		3EEE7E232AF00FAA00656070 /* YandexMusicApp */ = {
 			isa = PBXGroup;
 			children = (
+				3EEE7E812AF06AE500656070 /* Extensions */,
+				3EEE7E882AF18F1300656070 /* Fonts */,
 				3EEE7E6F2AF047F600656070 /* Colors */,
 				3EEE7E6E2AF047EE00656070 /* Icons */,
 				3EEE7E692AF0478400656070 /* Elements */,
@@ -143,8 +159,10 @@
 				3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */,
 				3EEE7E262AF00FAA00656070 /* ContentView.swift */,
 				3EEE7E282AF00FAC00656070 /* Assets.xcassets */,
+				3EEE7E8F2AF18FE200656070 /* Info.plist */,
 				3EEE7E2A2AF00FAC00656070 /* YandexMusicApp.entitlements */,
 				3EEE7E2B2AF00FAC00656070 /* Preview Content */,
+				3EEE7E902AF194D500656070 /* Constants.swift */,
 			);
 			path = YandexMusicApp;
 			sourceTree = "<group>";
@@ -221,6 +239,8 @@
 				3EEE7E762AF0487A00656070 /* DropdownMenuButton.swift */,
 				3EEE7E7A2AF048D600656070 /* InstrumentButton.swift */,
 				3EEE7E782AF048C000656070 /* TrackView.swift */,
+				3EEE7E7F2AF04FD900656070 /* MusicPad.swift */,
+				3EEE7E862AF06B1E00656070 /* Slider.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -251,6 +271,32 @@
 				3EEE7E7C2AF048ED00656070 /* Track.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		3EEE7E812AF06AE500656070 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE7E822AF06AF700656070 /* CGRect+extension.swift */,
+				3EEE7E842AF06B0A00656070 /* ClosedRange+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3EEE7E882AF18F1300656070 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE7E8D2AF18F7800656070 /* TTF */,
+				3EEE7E8B2AF18F6900656070 /* Font+extension.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		3EEE7E8D2AF18F7800656070 /* TTF */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE7E8E2AF18F9600656070 /* YandexSansText-Regular.ttf */,
+			);
+			path = TTF;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -395,15 +441,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */,
+				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
+				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
 				3EEE7E7D2AF048ED00656070 /* Track.swift in Sources */,
 				3EEE7E772AF0487A00656070 /* DropdownMenuButton.swift in Sources */,
+				3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */,
 				3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */,
 				3EEE7E732AF0482B00656070 /* Colors.swift in Sources */,
 				3EEE7E6B2AF047B700656070 /* Manager.swift in Sources */,
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
+				3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */,
+				3EEE7E802AF04FD900656070 /* MusicPad.swift in Sources */,
 				3EEE7E6D2AF047D900656070 /* InstrumentType.swift in Sources */,
 				3EEE7E712AF0481600656070 /* Icons.swift in Sources */,
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
+				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +620,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = YandexMusicApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -606,6 +659,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = YandexMusicApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

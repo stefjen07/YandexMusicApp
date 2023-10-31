@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct DropdownMenuButton: View {
+	var title: any StringProtocol
 	@Binding var isOpened: Bool
+
+	init(_ title: any StringProtocol, isOpened: Binding<Bool>) {
+		self.title = title
+		self._isOpened = isOpened
+	}
 
 	var body: some View {
 		Button(action: {
 			isOpened.toggle()
 		}, label: {
 			HStack(spacing: 16) {
-				Text("Слои")
+				Text(title)
+					.font(.ysTextBody)
 					.foregroundStyle(.black)
 				Icons.chevron(isOpened ? .down : .up)
 			}
@@ -27,5 +34,5 @@ struct DropdownMenuButton: View {
 }
 
 #Preview {
-	DropdownMenuButton(isOpened: .constant(true))
+	DropdownMenuButton("Слои", isOpened: .constant(true))
 }

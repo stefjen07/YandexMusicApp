@@ -9,21 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
 	@State var isDropdownMenuOpened = false
+	@State var openedInstrument: InstrumentType?
 
     var body: some View {
 		VStack(spacing: 21) {
-			HStack {
-				ForEach(InstrumentType.allCases) { instrument in
-					InstrumentButton(instrument)
+			ZStack(alignment: .top) {
+				HStack(alignment: .top) {
+					ForEach(InstrumentType.allCases) { instrument in
+						InstrumentButton(instrument, openedInstrument: $openedInstrument)
 
-					if instrument != InstrumentType.allCases.last {
-						Spacer()
+						if instrument != InstrumentType.allCases.last {
+							Spacer()
+						}
 					}
 				}
-			}
 
-			ZStack {
-
+				MusicPad()
+					.padding(.top, 120)
+					.zIndex(-1)
 
 				VStack(spacing: 7) {
 					Spacer()
@@ -37,7 +40,7 @@ struct ContentView: View {
 			}
 
 			HStack {
-				DropdownMenuButton(isOpened: $isDropdownMenuOpened)
+				DropdownMenuButton("Слои", isOpened: $isDropdownMenuOpened)
 
 				Spacer()
 

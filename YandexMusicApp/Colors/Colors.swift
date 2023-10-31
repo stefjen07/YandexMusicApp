@@ -17,4 +17,5 @@ enum ChevronDirection: Int {
 class Colors {
 	static let selection = Color("selection")
 	static let secondaryBackground = Color("secondary-background")
+	static let padBackground = Color("pad-background")
 }
