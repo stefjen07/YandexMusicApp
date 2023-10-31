@@ -22,6 +22,7 @@ struct Slider: View {
 	var horizontalSlider: some View {
 		Text(text)
 			.font(.ysTextSlider)
+			.foregroundStyle(.black)
 			.frame(width: width, height: height)
 			.background(Colors.selection)
 			.cornerRadius(Constants.sliderCornerRadius)

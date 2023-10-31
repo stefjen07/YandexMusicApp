@@ -29,8 +29,8 @@ struct DropdownMenuButton: View {
 				Icons.chevron(isOpened ? .down : .up)
 			}
 				.padding(10)
-				.background(isOpened ? Colors.selection : .white)
-				.cornerRadius(4)
+				.background(isOpened ? Colors.selection : Colors.buttonBackground)
+				.cornerRadius(Constants.globalCornerRadius)
 		})
 	}
 }

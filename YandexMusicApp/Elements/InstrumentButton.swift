@@ -38,7 +38,7 @@ struct InstrumentButton: View {
 			instrument.icon
 				.resizable()
 				.frame(height: Constants.instrumentButtonSize)
-				.background(isOpened ? .clear : .white)
+				.background(isOpened ? .clear : Colors.buttonBackground)
 				.clipShape(Circle())
 
 			if isOpened {
@@ -46,6 +46,7 @@ struct InstrumentButton: View {
 					ForEach(1..<4) { i in
 						Text("sample \(i)")
 							.font(.ysTextBody)
+							.foregroundStyle(.black)
 							.padding(.horizontal, 6)
 							.padding(.vertical, 12)
 							.background(
@@ -67,7 +68,7 @@ struct InstrumentButton: View {
 			} else {
 				Text(instrument.name)
 					.font(.ysTextBody)
-					.foregroundStyle(.white)
+					.foregroundStyle(.primary)
 			}
 		}
 		.frame(width: Constants.instrumentButtonSize)
@@ -101,5 +102,4 @@ struct InstrumentButtonPreview: View {
 		Spacer()
 	}
 		.padding()
-		.background(.black)
 }

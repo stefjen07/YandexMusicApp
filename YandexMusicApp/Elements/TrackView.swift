@@ -18,6 +18,7 @@ struct TrackView: View {
 		HStack(spacing: 0) {
 			HStack(spacing: 15) {
 				Text(track.type.name(1))
+					.foregroundStyle(.black)
 					.font(.ysTextBody)
 				Spacer()
 				Icons.play
@@ -36,12 +37,12 @@ struct TrackView: View {
 			}, label: {
 				Icons.xmark
 					.padding(13)
-					.background(Colors.secondaryBackground)
-					.cornerRadius(4)
+					.background(Colors.xmarkBackground)
+					.cornerRadius(Constants.globalCornerRadius)
 			})
 		}
-		.background(.white)
-		.cornerRadius(4)
+		.background(Colors.trackBackground)
+		.cornerRadius(Constants.globalCornerRadius)
 	}
 }
 

@@ -35,6 +35,7 @@ struct ContentView: View {
 						VStack {
 							ForEach(0..<5) { _ in
 								TrackView(.init(.insturment(.drums)))
+									.shadow(color: Color.gray, radius: 5)
 							}
 						}
 						.transition(
@@ -62,7 +63,6 @@ struct ContentView: View {
 			}
         }
 		.padding(15)
-		.background(.black)
     }
 }
 

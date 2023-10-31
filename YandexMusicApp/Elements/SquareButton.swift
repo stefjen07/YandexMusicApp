@@ -20,8 +20,8 @@ struct SquareButton: View {
 		Button(action: action, label: {
 			icon
 				.frame(width: 34, height: 34)
-				.background(.white)
-				.cornerRadius(4)
+				.background(Colors.buttonBackground)
+				.cornerRadius(Constants.globalCornerRadius)
 		})
 	}
 }

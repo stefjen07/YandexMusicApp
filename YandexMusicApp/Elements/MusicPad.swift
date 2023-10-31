@@ -30,7 +30,7 @@ struct MusicPad: View {
 						GeometryReader { proxy in
 							ZStack {
 								ForEach(0..<bottomScaleCount) { i in
-									Color.white
+									Color.primary
 										.frame(width: 1)
 										.offset(
 											x: proxy.size.width *
@@ -54,7 +54,7 @@ struct MusicPad: View {
 					ZStack(alignment: .topLeading) {
 						VStack(alignment: .leading, spacing: 0) {
 							ForEach(0..<leadingScaleCount) { i in
-								Color.white
+								Color.primary
 									.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
 								if i != leadingScaleCount - 1 {
 									Spacer()
