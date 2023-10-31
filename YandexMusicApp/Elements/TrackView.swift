@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrackView: View {
-	var track: Track
+	@ObservedObject var track: Track
 
 	init(_ track: Track) {
 		self.track = track
@@ -17,11 +17,17 @@ struct TrackView: View {
 	var body: some View {
 		HStack(spacing: 0) {
 			HStack(spacing: 15) {
-				Text(track.name)
+				Text(track.type.name(1))
 					.font(.ysTextBody)
 				Spacer()
 				Icons.play
-				Icons.unmute
+
+				Button(action: {
+					track.isMuted.toggle()
+				}, label: {
+					(track.isMuted ? Icons.unmute : Icons.mute)
+						.frame(width: 17)
+				})
 			}
 			.padding(11)
 
@@ -40,5 +46,5 @@ struct TrackView: View {
 }
 
 #Preview {
-	TrackView(.init(name: "Ударные 1"))
+	TrackView(.init(.insturment(.drums)))
 }

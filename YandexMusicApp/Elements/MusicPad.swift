@@ -13,6 +13,7 @@ struct MusicPad: View {
 	private let bottomScalePower = 2
 
 	@State var scaleOffset = CGPoint.zero
+	@State var isMoving = false
 
     var body: some View {
 		GeometryReader { proxy in
@@ -39,11 +40,12 @@ struct MusicPad: View {
 								}
 							}
 						}
-						.frame(height: 8)
+						.frame(height: isMoving ? 14 : 8)
 						.scaleEffect(x: -1, y: 1)
 						.padding(.leading, 25)
+						.padding(.horizontal, Constants.sliderCornerRadius)
 
-						Slider("скорость")
+						Slider("speed")
 							.offset(x: scaleOffset.x)
 					}
 				}
@@ -53,14 +55,15 @@ struct MusicPad: View {
 						VStack(alignment: .leading, spacing: 0) {
 							ForEach(0..<leadingScaleCount) { i in
 								Color.white
-									.frame(width: i % 5 == 0 ? 16 : 8, height: 1)
+									.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
 								if i != leadingScaleCount - 1 {
 									Spacer()
 								}
 							}
 						}
+						.padding(.vertical, Constants.sliderCornerRadius)
 
-						Slider("громкость", isVertical: true)
+						Slider("volume", isVertical: true)
 							.offset(y: scaleOffset.y)
 					}
 					Spacer()
@@ -82,7 +85,16 @@ struct MusicPad: View {
 							.nearestPoint(to: value.location)
 							.applying(.init(translationX: -widthOffset, y: -widthOffset))
 
-						print(scaleOffset)
+						if !isMoving {
+							withAnimation {
+								isMoving = true
+							}
+						}
+					}
+					.onEnded { _ in
+						withAnimation {
+							isMoving = false
+						}
 					}
 			)
 		}

@@ -40,6 +40,7 @@
 		3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E862AF06B1E00656070 /* Slider.swift */; };
 		3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E8B2AF18F6900656070 /* Font+extension.swift */; };
 		3EEE7E912AF194D500656070 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E902AF194D500656070 /* Constants.swift */; };
+		3EEE7E932AF19E4A00656070 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E922AF19E4A00656070 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		3EEE7E8E2AF18F9600656070 /* YandexSansText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YandexSansText-Regular.ttf"; sourceTree = "<group>"; };
 		3EEE7E8F2AF18FE200656070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3EEE7E902AF194D500656070 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3EEE7E922AF19E4A00656070 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,12 +159,13 @@
 				3EEE7E7E2AF048F400656070 /* Data */,
 				3EEE7E512AF0406700656070 /* Samples */,
 				3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */,
+				3EEE7E902AF194D500656070 /* Constants.swift */,
 				3EEE7E262AF00FAA00656070 /* ContentView.swift */,
 				3EEE7E282AF00FAC00656070 /* Assets.xcassets */,
 				3EEE7E8F2AF18FE200656070 /* Info.plist */,
 				3EEE7E2A2AF00FAC00656070 /* YandexMusicApp.entitlements */,
 				3EEE7E2B2AF00FAC00656070 /* Preview Content */,
-				3EEE7E902AF194D500656070 /* Constants.swift */,
+				3EEE7E922AF19E4A00656070 /* Localizable.xcstrings */,
 			);
 			path = YandexMusicApp;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 3EEE7E182AF00FAA00656070;
 			productRefGroup = 3EEE7E222AF00FAA00656070 /* Products */;
@@ -415,6 +419,7 @@
 				3EEE7E642AF0406700656070 /* brass1.wav in Resources */,
 				3EEE7E602AF0406700656070 /* drum1.wav in Resources */,
 				3EEE7E632AF0406700656070 /* guitar1.wav in Resources */,
+				3EEE7E932AF19E4A00656070 /* Localizable.xcstrings in Resources */,
 				3EEE7E5E2AF0406700656070 /* drum2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -631,7 +636,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -670,7 +675,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;

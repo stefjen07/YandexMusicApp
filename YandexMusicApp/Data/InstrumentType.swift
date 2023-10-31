@@ -27,14 +27,14 @@ enum InstrumentType: String, Identifiable, CaseIterable {
 		}
 	}
 
-	var name: String {
+	var name: LocalizedStringKey {
 		switch self {
 		case .guitar:
-			"гитара"
+			"guitar"
 		case .drums:
-			"ударные"
+			"drums"
 		case .brass:
-			"духовые"
+			"brass"
 		}
 	}
 }

@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct DropdownMenuButton: View {
-	var title: any StringProtocol
+	var title: LocalizedStringKey
 	@Binding var isOpened: Bool
 
-	init(_ title: any StringProtocol, isOpened: Binding<Bool>) {
+	init(_ title: LocalizedStringKey, isOpened: Binding<Bool>) {
 		self.title = title
 		self._isOpened = isOpened
 	}
 
 	var body: some View {
 		Button(action: {
-			isOpened.toggle()
+			withAnimation(.easeInOut(duration: 0.35)) {
+				isOpened.toggle()
+			}
 		}, label: {
 			HStack(spacing: 16) {
 				Text(title)
@@ -34,5 +36,5 @@ struct DropdownMenuButton: View {
 }
 
 #Preview {
-	DropdownMenuButton("Слои", isOpened: .constant(true))
+	DropdownMenuButton("layers", isOpened: .constant(true))
 }

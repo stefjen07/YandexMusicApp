@@ -9,4 +9,7 @@ import Foundation
 
 class Constants {
 	static let sliderWidth: CGFloat = 60
+	static let sliderCornerRadius: CGFloat = 4
+
+	static let instrumentButtonSize: CGFloat = 70
 }

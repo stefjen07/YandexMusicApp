@@ -32,15 +32,21 @@ struct ContentView: View {
 					Spacer()
 
 					if isDropdownMenuOpened {
-						ForEach(0..<5) { _ in
-							TrackView(.init(name: "Ударные 1"))
+						VStack {
+							ForEach(0..<5) { _ in
+								TrackView(.init(.insturment(.drums)))
+							}
 						}
+						.transition(
+							.move(edge: .bottom)
+								.combined(with: .opacity)
+						)
 					}
 				}
 			}
 
 			HStack {
-				DropdownMenuButton("Слои", isOpened: $isDropdownMenuOpened)
+				DropdownMenuButton("layers", isOpened: $isDropdownMenuOpened)
 
 				Spacer()
 

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct Slider: View {
-	var text: String
+	var text: LocalizedStringKey
 	var isVertical: Bool
 
-	private let width: CGFloat = 60
+	private let width: CGFloat = Constants.sliderWidth
 	private let height: CGFloat = 14
 
-	init(_ text: String, isVertical: Bool = false) {
+	init(_ text: LocalizedStringKey, isVertical: Bool = false) {
 		self.text = text
 		self.isVertical = isVertical
 	}
@@ -24,7 +24,7 @@ struct Slider: View {
 			.font(.ysTextSlider)
 			.frame(width: width, height: height)
 			.background(Colors.selection)
-			.cornerRadius(4)
+			.cornerRadius(Constants.sliderCornerRadius)
 	}
 
 	var body: some View {
@@ -40,5 +40,5 @@ struct Slider: View {
 }
 
 #Preview {
-    Slider("громкость")
+    Slider("volume")
 }

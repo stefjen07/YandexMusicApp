@@ -17,7 +17,15 @@ struct InstrumentButton: View {
 	}
 
 	func open() {
-		openedInstrument = instrument
+		withAnimation(.easeIn) {
+			openedInstrument = instrument
+		}
+	}
+
+	func close() {
+		withAnimation(.easeOut) {
+			openedInstrument = nil
+		}
 	}
 
 	init(_ instrument: InstrumentType, openedInstrument: Binding<InstrumentType?>) {
@@ -26,29 +34,19 @@ struct InstrumentButton: View {
 	}
 
 	var body: some View {
-		ZStack(alignment: .top) {
-			VStack {
-				instrument.icon
-					.frame(width: 60, height: 60)
-					.background(Color.white)
-					.clipShape(Circle())
-
-				Text(instrument.name)
-					.font(.ysTextBody)
-					.foregroundStyle(.white)
-			}
-			.onLongPressGesture {
-				open()
-			}
+		VStack(spacing: 10) {
+			instrument.icon
+				.resizable()
+				.frame(height: Constants.instrumentButtonSize)
+				.background(isOpened ? .clear : .white)
+				.clipShape(Circle())
 
 			if isOpened {
 				VStack(spacing: 0) {
-					instrument.icon
-					
 					ForEach(1..<4) { i in
-						Text("сэмпл \(i)")
+						Text("sample \(i)")
 							.font(.ysTextBody)
-							.padding(.horizontal, 8)
+							.padding(.horizontal, 6)
 							.padding(.vertical, 12)
 							.background(
 								LinearGradient(
@@ -60,19 +58,48 @@ struct InstrumentButton: View {
 										.white.opacity(0)
 									],
 									startPoint: .top,
-									endPoint: .bottom)
+									endPoint: .bottom
+								)
 							)
 					}
 				}
 				.padding(.bottom, 30)
-				.frame(width: 60)
-				.background(Colors.selection)
-				.clipShape(Capsule())
+			} else {
+				Text(instrument.name)
+					.font(.ysTextBody)
+					.foregroundStyle(.white)
+			}
+		}
+		.frame(width: Constants.instrumentButtonSize)
+		.background {
+			if isOpened {
+				Colors.selection
+					.clipShape(Capsule())
+			}
+		}
+		.onLongPressGesture {
+			if isOpened {
+				close()
+			} else {
+				open()
 			}
 		}
 	}
 }
 
+struct InstrumentButtonPreview: View {
+	@State var openedInstrument: InstrumentType?
+
+	var body: some View {
+		InstrumentButton(.guitar, openedInstrument: $openedInstrument)
+	}
+}
+
 #Preview {
-	InstrumentButton(.guitar, openedInstrument: .constant(nil))
+	VStack {
+		InstrumentButtonPreview()
+		Spacer()
+	}
+		.padding()
+		.background(.black)
 }
