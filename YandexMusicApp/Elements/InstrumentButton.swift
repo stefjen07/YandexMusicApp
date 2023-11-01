@@ -10,7 +10,8 @@ import SwiftUI
 struct InstrumentButton: View {
 	var instrument: InstrumentType
 
-	@ObservedObject var manager: Manager
+	let sampleManager: SampleManager
+	@ObservedObject var trackManager: TrackManager
 	@Binding var openedInstrument: InstrumentType?
 
 	@State var highlightedSample: Int?
@@ -31,7 +32,7 @@ struct InstrumentButton: View {
 	func selectSample(_ index: Int) {
 		recentSample = index
 		
-		manager.selectSample(instrument, sample: index)
+		trackManager.createInstrumentTrack(instrument, sample: index)
 	}
 
 	func close() {
@@ -43,9 +44,12 @@ struct InstrumentButton: View {
 
 	init(_ instrument: InstrumentType, 
 		 openedInstrument: Binding<InstrumentType?>,
-		 manager: Manager) {
+		 sampleManager: SampleManager,
+		 trackManager: TrackManager
+	) {
 		self.instrument = instrument
-		self.manager = manager
+		self.sampleManager = sampleManager
+		self.trackManager = trackManager
 		self._openedInstrument = openedInstrument
 	}
 
@@ -140,17 +144,23 @@ struct InstrumentButton: View {
 						for i in 0..<3 {
 							if let frame = sampleFrames[i],
 							   frame.contains(value.location) {
-								highlightedSample = i
+								if highlightedSample != i {
+									highlightedSample = i
+									sampleManager.playSamplePreview(instrument, sample: i)
+								}
+
 								return
 							}
 						}
 
 						highlightedSample = nil
+						sampleManager.stopSamplePreview()
 					}
 					.onEnded { _ in
 						if let highlightedSample {
 							selectSample(highlightedSample)
 						}
+						sampleManager.stopSamplePreview()
 
 						close()
 						print(3)
@@ -164,7 +174,12 @@ struct InstrumentButtonPreview: View {
 	@State var openedInstrument: InstrumentType?
 
 	var body: some View {
-		InstrumentButton(.guitar, openedInstrument: $openedInstrument, manager: .init())
+		InstrumentButton(
+			.guitar,
+			openedInstrument: $openedInstrument,
+			sampleManager: .init(),
+			trackManager: .init()
+		)
 	}
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias Sample = Data
+typealias Sample = URL
 
 protocol SampleRepositoryProtocol {
 	func getSamples() -> [Sample]
@@ -16,7 +16,7 @@ protocol SampleRepositoryProtocol {
 }
 
 class SampleRepository: SampleRepositoryProtocol {
-	var samples: [InstrumentType: [Sample]] = [:]
+	private var samples: [InstrumentType: [Sample]] = [:]
 
 	init() {
 		loadSamples()
@@ -27,10 +27,8 @@ class SampleRepository: SampleRepositoryProtocol {
 			samples[type] = []
 
 			for index in 1..<4 {
-				if let url = Bundle.main.url(forResource: "\(type.name)\(index)", withExtension: "wav"),
-				   let data = try? Data(contentsOf: url)
-				{
-					samples[type]?.append(data)
+				if let url = Bundle.main.url(forResource: "\(type.rawValue)\(index)", withExtension: "wav") {
+					samples[type]?.append(url)
 				}
 			}
 		}

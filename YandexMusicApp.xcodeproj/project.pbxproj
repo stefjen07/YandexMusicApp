@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E84B9712AF2AAFB00839021 /* TrackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9702AF2AAFB00839021 /* TrackManager.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -15,9 +16,9 @@
 		3EEE7E412AF00FAC00656070 /* YandexMusicAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E402AF00FAC00656070 /* YandexMusicAppUITests.swift */; };
 		3EEE7E432AF00FAC00656070 /* YandexMusicAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E422AF00FAC00656070 /* YandexMusicAppUITestsLaunchTests.swift */; };
 		3EEE7E502AF010E800656070 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E4F2AF010E800656070 /* Icons.xcassets */; };
-		3EEE7E5E2AF0406700656070 /* drum2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E532AF0406700656070 /* drum2.wav */; };
-		3EEE7E5F2AF0406700656070 /* drum3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E542AF0406700656070 /* drum3.wav */; };
-		3EEE7E602AF0406700656070 /* drum1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E552AF0406700656070 /* drum1.wav */; };
+		3EEE7E5E2AF0406700656070 /* drums2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E532AF0406700656070 /* drums2.wav */; };
+		3EEE7E5F2AF0406700656070 /* drums3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E542AF0406700656070 /* drums3.wav */; };
+		3EEE7E602AF0406700656070 /* drums1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E552AF0406700656070 /* drums1.wav */; };
 		3EEE7E612AF0406700656070 /* guitar3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E572AF0406700656070 /* guitar3.wav */; };
 		3EEE7E622AF0406700656070 /* guitar2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E582AF0406700656070 /* guitar2.wav */; };
 		3EEE7E632AF0406700656070 /* guitar1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E592AF0406700656070 /* guitar1.wav */; };
@@ -25,7 +26,7 @@
 		3EEE7E652AF0406700656070 /* brass2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E5C2AF0406700656070 /* brass2.wav */; };
 		3EEE7E662AF0406700656070 /* brass3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E5D2AF0406700656070 /* brass3.wav */; };
 		3EEE7E682AF046E300656070 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E672AF046E300656070 /* Colors.xcassets */; };
-		3EEE7E6B2AF047B700656070 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E6A2AF047B700656070 /* Manager.swift */; };
+		3EEE7E6B2AF047B700656070 /* SampleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E6A2AF047B700656070 /* SampleManager.swift */; };
 		3EEE7E6D2AF047D900656070 /* InstrumentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E6C2AF047D900656070 /* InstrumentType.swift */; };
 		3EEE7E712AF0481600656070 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E702AF0481600656070 /* Icons.swift */; };
 		3EEE7E732AF0482B00656070 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E722AF0482B00656070 /* Colors.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E84B9702AF2AAFB00839021 /* TrackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackManager.swift; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,9 +77,9 @@
 		3EEE7E402AF00FAC00656070 /* YandexMusicAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicAppUITests.swift; sourceTree = "<group>"; };
 		3EEE7E422AF00FAC00656070 /* YandexMusicAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3EEE7E4F2AF010E800656070 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		3EEE7E532AF0406700656070 /* drum2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drum2.wav; sourceTree = "<group>"; };
-		3EEE7E542AF0406700656070 /* drum3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drum3.wav; sourceTree = "<group>"; };
-		3EEE7E552AF0406700656070 /* drum1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drum1.wav; sourceTree = "<group>"; };
+		3EEE7E532AF0406700656070 /* drums2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drums2.wav; sourceTree = "<group>"; };
+		3EEE7E542AF0406700656070 /* drums3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drums3.wav; sourceTree = "<group>"; };
+		3EEE7E552AF0406700656070 /* drums1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drums1.wav; sourceTree = "<group>"; };
 		3EEE7E572AF0406700656070 /* guitar3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = guitar3.wav; sourceTree = "<group>"; };
 		3EEE7E582AF0406700656070 /* guitar2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = guitar2.wav; sourceTree = "<group>"; };
 		3EEE7E592AF0406700656070 /* guitar1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = guitar1.wav; sourceTree = "<group>"; };
@@ -85,7 +87,7 @@
 		3EEE7E5C2AF0406700656070 /* brass2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = brass2.wav; sourceTree = "<group>"; };
 		3EEE7E5D2AF0406700656070 /* brass3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = brass3.wav; sourceTree = "<group>"; };
 		3EEE7E672AF046E300656070 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		3EEE7E6A2AF047B700656070 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		3EEE7E6A2AF047B700656070 /* SampleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleManager.swift; sourceTree = "<group>"; };
 		3EEE7E6C2AF047D900656070 /* InstrumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentType.swift; sourceTree = "<group>"; };
 		3EEE7E702AF0481600656070 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		3EEE7E722AF0482B00656070 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -212,9 +214,9 @@
 		3EEE7E522AF0406700656070 /* Drums */ = {
 			isa = PBXGroup;
 			children = (
-				3EEE7E532AF0406700656070 /* drum2.wav */,
-				3EEE7E542AF0406700656070 /* drum3.wav */,
-				3EEE7E552AF0406700656070 /* drum1.wav */,
+				3EEE7E532AF0406700656070 /* drums2.wav */,
+				3EEE7E542AF0406700656070 /* drums3.wav */,
+				3EEE7E552AF0406700656070 /* drums1.wav */,
 			);
 			path = Drums;
 			sourceTree = "<group>";
@@ -274,8 +276,9 @@
 			isa = PBXGroup;
 			children = (
 				3EEE7E982AF1C67400656070 /* Models */,
-				3EEE7E6A2AF047B700656070 /* Manager.swift */,
+				3EEE7E6A2AF047B700656070 /* SampleManager.swift */,
 				3EEE7E962AF1C66A00656070 /* SampleRepository.swift */,
+				3E84B9702AF2AAFB00839021 /* TrackManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -424,17 +427,17 @@
 				3EEE7E652AF0406700656070 /* brass2.wav in Resources */,
 				3EEE7E2D2AF00FAC00656070 /* Preview Assets.xcassets in Resources */,
 				3EEE7E682AF046E300656070 /* Colors.xcassets in Resources */,
-				3EEE7E5F2AF0406700656070 /* drum3.wav in Resources */,
+				3EEE7E5F2AF0406700656070 /* drums3.wav in Resources */,
 				3EEE7E502AF010E800656070 /* Icons.xcassets in Resources */,
 				3EEE7E662AF0406700656070 /* brass3.wav in Resources */,
 				3EEE7E612AF0406700656070 /* guitar3.wav in Resources */,
 				3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */,
 				3EEE7E622AF0406700656070 /* guitar2.wav in Resources */,
 				3EEE7E642AF0406700656070 /* brass1.wav in Resources */,
-				3EEE7E602AF0406700656070 /* drum1.wav in Resources */,
+				3EEE7E602AF0406700656070 /* drums1.wav in Resources */,
 				3EEE7E632AF0406700656070 /* guitar1.wav in Resources */,
 				3EEE7E932AF19E4A00656070 /* Localizable.xcstrings in Resources */,
-				3EEE7E5E2AF0406700656070 /* drum2.wav in Resources */,
+				3EEE7E5E2AF0406700656070 /* drums2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */,
+				3E84B9712AF2AAFB00839021 /* TrackManager.swift in Sources */,
 				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
 				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
 				3EEE7E7D2AF048ED00656070 /* Track.swift in Sources */,
@@ -467,7 +471,7 @@
 				3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */,
 				3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */,
 				3EEE7E732AF0482B00656070 /* Colors.swift in Sources */,
-				3EEE7E6B2AF047B700656070 /* Manager.swift in Sources */,
+				3EEE7E6B2AF047B700656070 /* SampleManager.swift in Sources */,
 				3EEE7E972AF1C66A00656070 /* SampleRepository.swift in Sources */,
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
 				3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */,

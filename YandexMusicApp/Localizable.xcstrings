@@ -117,6 +117,23 @@
         }
       }
     },
+    "noLayersAdded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No layers added"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет добавленных слоёв"
+          }
+        }
+      }
+    },
     "sample %lld" : {
       "localizations" : {
         "en" : {

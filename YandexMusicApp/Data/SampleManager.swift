@@ -1,5 +1,5 @@
 //
-//  Manager.swift
+//  SampleManager.swift
 //  YandexMusicApp
 //
 //  Created by Евгений on 30.10.23.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import AVFoundation
 
-class SampleManager: ObservableObject {
+class SampleManager {
 	private let avPlayer: AVPlayer
 	private let sampleRepository: SampleRepositoryProtocol
 

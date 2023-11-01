@@ -8,12 +8,12 @@
 import SwiftUI
 
 enum TrackType {
-	case insturment(InstrumentType)
+	case instrument(InstrumentType, sample: Int)
 	case voice
 
 	func name(_ index: Int) -> LocalizedStringKey {
 		switch self {
-		case .insturment(let instrumentType):
+		case .instrument(let instrumentType, _):
 			return switch instrumentType {
 			case .guitar:
 				"guitarTrack \(index)"
@@ -28,12 +28,19 @@ enum TrackType {
 	}
 }
 
-class Track: ObservableObject {
+class Track: ObservableObject, Identifiable {
 	@Published var isMuted = false
+	var id = UUID()
 	var type: TrackType
+	var number: Int
 
-	init(_ type: TrackType, isMuted: Bool = false) {
+	var name: LocalizedStringKey {
+		type.name(number)
+	}
+
+	init(_ type: TrackType, number: Int, isMuted: Bool = false) {
 		self.type = type
+		self.number = number
 		self.isMuted = isMuted
 	}
 }

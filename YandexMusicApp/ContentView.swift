@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-	@ObservedObject var manager: Manager = .init()
+	let sampleManager: SampleManager = .init()
+	@ObservedObject var trackManager: TrackManager = .init()
 
 	@State var isDropdownMenuOpened = false
 	@State var openedInstrument: InstrumentType?
@@ -18,7 +19,12 @@ struct ContentView: View {
 			ZStack(alignment: .top) {
 				HStack(alignment: .top) {
 					ForEach(InstrumentType.allCases) { instrument in
-						InstrumentButton(instrument, openedInstrument: $openedInstrument, manager: manager)
+						InstrumentButton(
+							instrument,
+							openedInstrument: $openedInstrument,
+							sampleManager: sampleManager,
+							trackManager: trackManager
+						)
 
 						if instrument != InstrumentType.allCases.last {
 							Spacer()
@@ -34,10 +40,25 @@ struct ContentView: View {
 					Spacer()
 
 					if isDropdownMenuOpened {
-						VStack {
-							ForEach(0..<5) { _ in
-								TrackView(.init(.insturment(.drums)))
-									.shadow(color: Color.gray, radius: 5)
+						Group {
+							if trackManager.tracks.isEmpty {
+								HStack {
+									Spacer()
+									Text("noLayersAdded")
+										.font(.ysTextBody)
+										.foregroundStyle(.black)
+									Spacer()
+								}
+								.padding()
+								.background(Colors.trackBackground)
+								.cornerRadius(Constants.globalCornerRadius)
+								.shadow(color: Color.gray, radius: 5)
+							} else {
+								VStack {
+									ForEach(trackManager.tracks) { track in
+										TrackView(track, manager: trackManager)
+									}
+								}
 							}
 						}
 						.transition(
