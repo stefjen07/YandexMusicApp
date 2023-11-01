@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+	@ObservedObject var manager: Manager = .init()
+
 	@State var isDropdownMenuOpened = false
 	@State var openedInstrument: InstrumentType?
 
@@ -16,7 +18,7 @@ struct ContentView: View {
 			ZStack(alignment: .top) {
 				HStack(alignment: .top) {
 					ForEach(InstrumentType.allCases) { instrument in
-						InstrumentButton(instrument, openedInstrument: $openedInstrument)
+						InstrumentButton(instrument, openedInstrument: $openedInstrument, manager: manager)
 
 						if instrument != InstrumentType.allCases.last {
 							Spacer()

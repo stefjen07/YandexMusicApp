@@ -7,24 +7,24 @@
 
 import Foundation
 
-class Manager {
-	var samples: [InstrumentType: [Data]] = [:]
+class Manager: ObservableObject {
+	@Published private var sampleSelection: SampleSelection?
 
-	init() {
-		loadSamples()
+	private let sampleRepository: SampleRepositoryProtocol
+
+	init(sampleRepository: SampleRepositoryProtocol = SampleRepository()) {
+		self.sampleRepository = sampleRepository
 	}
 
-	func loadSamples() {
-		for type in InstrumentType.allCases {
-			samples[type] = []
-
-			for index in 1..<4 {
-				if let url = Bundle.main.url(forResource: "\(type.name)\(index)", withExtension: "wav"),
-				   let data = try? Data(contentsOf: url)
-				{
-					samples[type]?.append(data)
-				}
-			}
+	var currentSample: Sample? {
+		if let sampleSelection {
+			return sampleRepository.getSample(sampleSelection.instrument, sample: sampleSelection.sample)
 		}
+
+		return nil
+	}
+
+	func selectSample(_ instrument: InstrumentType, sample: Int) {
+		sampleSelection = .init(instrument: instrument, sample: sample)
 	}
 }

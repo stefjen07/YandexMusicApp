@@ -41,6 +41,8 @@
 		3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E8B2AF18F6900656070 /* Font+extension.swift */; };
 		3EEE7E912AF194D500656070 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E902AF194D500656070 /* Constants.swift */; };
 		3EEE7E932AF19E4A00656070 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E922AF19E4A00656070 /* Localizable.xcstrings */; };
+		3EEE7E952AF1C5A300656070 /* SampleSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E942AF1C5A300656070 /* SampleSelection.swift */; };
+		3EEE7E972AF1C66A00656070 /* SampleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E962AF1C66A00656070 /* SampleRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		3EEE7E8F2AF18FE200656070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3EEE7E902AF194D500656070 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3EEE7E922AF19E4A00656070 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		3EEE7E942AF1C5A300656070 /* SampleSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSelection.swift; sourceTree = "<group>"; };
+		3EEE7E962AF1C66A00656070 /* SampleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,9 +273,9 @@
 		3EEE7E7E2AF048F400656070 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3EEE7E982AF1C67400656070 /* Models */,
 				3EEE7E6A2AF047B700656070 /* Manager.swift */,
-				3EEE7E6C2AF047D900656070 /* InstrumentType.swift */,
-				3EEE7E7C2AF048ED00656070 /* Track.swift */,
+				3EEE7E962AF1C66A00656070 /* SampleRepository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -300,6 +304,16 @@
 				3EEE7E8E2AF18F9600656070 /* YandexSansText-Regular.ttf */,
 			);
 			path = TTF;
+			sourceTree = "<group>";
+		};
+		3EEE7E982AF1C67400656070 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE7E6C2AF047D900656070 /* InstrumentType.swift */,
+				3EEE7E7C2AF048ED00656070 /* Track.swift */,
+				3EEE7E942AF1C5A300656070 /* SampleSelection.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,11 +468,13 @@
 				3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */,
 				3EEE7E732AF0482B00656070 /* Colors.swift in Sources */,
 				3EEE7E6B2AF047B700656070 /* Manager.swift in Sources */,
+				3EEE7E972AF1C66A00656070 /* SampleRepository.swift in Sources */,
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
 				3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */,
 				3EEE7E802AF04FD900656070 /* MusicPad.swift in Sources */,
 				3EEE7E6D2AF047D900656070 /* InstrumentType.swift in Sources */,
 				3EEE7E712AF0481600656070 /* Icons.swift in Sources */,
+				3EEE7E952AF1C5A300656070 /* SampleSelection.swift in Sources */,
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
 				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,

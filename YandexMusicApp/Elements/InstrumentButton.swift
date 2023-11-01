@@ -10,7 +10,13 @@ import SwiftUI
 struct InstrumentButton: View {
 	var instrument: InstrumentType
 
+	@ObservedObject var manager: Manager
 	@Binding var openedInstrument: InstrumentType?
+
+	@State var highlightedSample: Int?
+	@State var recentSample: Int?
+	@State var isTapped = false
+	@State var sampleFrames: [Int: CGRect] = [:]
 
 	var isOpened: Bool {
 		instrument == openedInstrument
@@ -22,14 +28,24 @@ struct InstrumentButton: View {
 		}
 	}
 
+	func selectSample(_ index: Int) {
+		recentSample = index
+		
+		manager.selectSample(instrument, sample: index)
+	}
+
 	func close() {
+		highlightedSample = nil
 		withAnimation(.easeOut) {
 			openedInstrument = nil
 		}
 	}
 
-	init(_ instrument: InstrumentType, openedInstrument: Binding<InstrumentType?>) {
+	init(_ instrument: InstrumentType, 
+		 openedInstrument: Binding<InstrumentType?>,
+		 manager: Manager) {
 		self.instrument = instrument
+		self.manager = manager
 		self._openedInstrument = openedInstrument
 	}
 
@@ -38,30 +54,46 @@ struct InstrumentButton: View {
 			instrument.icon
 				.resizable()
 				.frame(height: Constants.instrumentButtonSize)
-				.background(isOpened ? .clear : Colors.buttonBackground)
+				.background(
+					isOpened ? .clear : (isTapped ? Colors.selection : Colors.buttonBackground)
+				)
 				.clipShape(Circle())
 
 			if isOpened {
 				VStack(spacing: 0) {
-					ForEach(1..<4) { i in
-						Text("sample \(i)")
-							.font(.ysTextBody)
-							.foregroundStyle(.black)
+					ForEach(0..<3) { i in
+						HStack(spacing: 0) {
+							Spacer(minLength: 0)
+							Text("sample \(i+1)")
+								.font(.ysTextBody)
+								.foregroundStyle(.black)
+							Spacer(minLength: 0)
+						}
 							.padding(.horizontal, 6)
 							.padding(.vertical, 12)
-							.background(
-								LinearGradient(
-									colors: [
-										.white.opacity(0),
-										.white.opacity(0.75),
-										.white,
-										.white.opacity(0.75),
-										.white.opacity(0)
-									],
-									startPoint: .top,
-									endPoint: .bottom
-								)
-							)
+							.background {
+								if highlightedSample == i {
+									LinearGradient(
+										colors: [
+											.white.opacity(0),
+											.white.opacity(0.75),
+											.white,
+											.white.opacity(0.75),
+											.white.opacity(0)
+										],
+										startPoint: .top,
+										endPoint: .bottom
+									)
+								}
+
+								GeometryReader { proxy -> Color in
+									DispatchQueue.main.async {
+										sampleFrames[i] = proxy.frame(in: .global)
+									}
+
+									return Color.clear
+								}
+							}
 					}
 				}
 				.padding(.bottom, 30)
@@ -78,13 +110,53 @@ struct InstrumentButton: View {
 					.clipShape(Capsule())
 			}
 		}
-		.onLongPressGesture {
-			if isOpened {
-				close()
-			} else {
-				open()
-			}
-		}
+		.gesture(
+			SimultaneousGesture(
+				SimultaneousGesture(
+					LongPressGesture()
+						.onEnded { _ in
+							open()
+							print(1)
+						},
+					TapGesture()
+						.onEnded { _ in
+							withAnimation {
+								openedInstrument = nil
+								isTapped = true
+							}
+
+							selectSample(recentSample ?? 0)
+
+							Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
+								withAnimation {
+									isTapped = false
+								}
+							}
+							print(2)
+						}
+				),
+				DragGesture(minimumDistance: 0, coordinateSpace: .global)
+					.onChanged { value in
+						for i in 0..<3 {
+							if let frame = sampleFrames[i],
+							   frame.contains(value.location) {
+								highlightedSample = i
+								return
+							}
+						}
+
+						highlightedSample = nil
+					}
+					.onEnded { _ in
+						if let highlightedSample {
+							selectSample(highlightedSample)
+						}
+
+						close()
+						print(3)
+					}
+			)
+		)
 	}
 }
 
@@ -92,7 +164,7 @@ struct InstrumentButtonPreview: View {
 	@State var openedInstrument: InstrumentType?
 
 	var body: some View {
-		InstrumentButton(.guitar, openedInstrument: $openedInstrument)
+		InstrumentButton(.guitar, openedInstrument: $openedInstrument, manager: .init())
 	}
 }
 
