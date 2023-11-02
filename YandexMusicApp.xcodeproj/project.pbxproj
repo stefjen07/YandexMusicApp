@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3E84B9712AF2AAFB00839021 /* TrackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9702AF2AAFB00839021 /* TrackManager.swift */; };
+		3E84B9732AF2C27000839021 /* VoiceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9722AF2C27000839021 /* VoiceRecorder.swift */; };
+		3E84B9752AF2F1A500839021 /* TrackCombiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9742AF2F1A500839021 /* TrackCombiner.swift */; };
+		3E84B9772AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */; };
+		3E84B9792AF30BEC00839021 /* DocumentInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */; };
+		3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B97C2AF3116200839021 /* URL+extension.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -65,6 +70,11 @@
 
 /* Begin PBXFileReference section */
 		3E84B9702AF2AAFB00839021 /* TrackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackManager.swift; sourceTree = "<group>"; };
+		3E84B9722AF2C27000839021 /* VoiceRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecorder.swift; sourceTree = "<group>"; };
+		3E84B9742AF2F1A500839021 /* TrackCombiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCombiner.swift; sourceTree = "<group>"; };
+		3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+extension.swift"; sourceTree = "<group>"; };
+		3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInteractionView.swift; sourceTree = "<group>"; };
+		3E84B97C2AF3116200839021 /* URL+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+extension.swift"; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -138,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				3EEE7E232AF00FAA00656070 /* YandexMusicApp */,
-				3EEE7E352AF00FAC00656070 /* YandexMusicAppTests */,
 				3EEE7E3F2AF00FAC00656070 /* YandexMusicAppUITests */,
 				3EEE7E222AF00FAA00656070 /* Products */,
 			);
@@ -167,6 +176,8 @@
 				3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */,
 				3EEE7E902AF194D500656070 /* Constants.swift */,
 				3EEE7E262AF00FAA00656070 /* ContentView.swift */,
+				3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */,
+				3EEE7E352AF00FAC00656070 /* YandexMusicAppTests */,
 				3EEE7E282AF00FAC00656070 /* Assets.xcassets */,
 				3EEE7E8F2AF18FE200656070 /* Info.plist */,
 				3EEE7E2A2AF00FAC00656070 /* YandexMusicApp.entitlements */,
@@ -279,6 +290,8 @@
 				3EEE7E6A2AF047B700656070 /* SampleManager.swift */,
 				3EEE7E962AF1C66A00656070 /* SampleRepository.swift */,
 				3E84B9702AF2AAFB00839021 /* TrackManager.swift */,
+				3E84B9722AF2C27000839021 /* VoiceRecorder.swift */,
+				3E84B9742AF2F1A500839021 /* TrackCombiner.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -288,6 +301,8 @@
 			children = (
 				3EEE7E822AF06AF700656070 /* CGRect+extension.swift */,
 				3EEE7E842AF06B0A00656070 /* ClosedRange+extension.swift */,
+				3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */,
+				3E84B97C2AF3116200839021 /* URL+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -464,10 +479,13 @@
 			files = (
 				3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */,
 				3E84B9712AF2AAFB00839021 /* TrackManager.swift in Sources */,
+				3E84B9752AF2F1A500839021 /* TrackCombiner.swift in Sources */,
 				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
+				3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */,
 				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
 				3EEE7E7D2AF048ED00656070 /* Track.swift in Sources */,
 				3EEE7E772AF0487A00656070 /* DropdownMenuButton.swift in Sources */,
+				3E84B9792AF30BEC00839021 /* DocumentInteractionView.swift in Sources */,
 				3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */,
 				3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */,
 				3EEE7E732AF0482B00656070 /* Colors.swift in Sources */,
@@ -476,9 +494,11 @@
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
 				3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */,
 				3EEE7E802AF04FD900656070 /* MusicPad.swift in Sources */,
+				3E84B9772AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift in Sources */,
 				3EEE7E6D2AF047D900656070 /* InstrumentType.swift in Sources */,
 				3EEE7E712AF0481600656070 /* Icons.swift in Sources */,
 				3EEE7E952AF1C5A300656070 /* SampleSelection.swift in Sources */,
+				3E84B9732AF2C27000839021 /* VoiceRecorder.swift in Sources */,
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
 				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,
@@ -646,6 +666,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YandexMusicApp/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone is used to record voice tracks for your music";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -654,8 +675,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -685,6 +706,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YandexMusicApp/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone is used to record voice tracks for your music";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -693,8 +715,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

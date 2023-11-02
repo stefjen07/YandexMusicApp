@@ -30,17 +30,22 @@ enum TrackType {
 
 class Track: ObservableObject, Identifiable {
 	@Published var isMuted = false
+	@Published var speed: Double
+	@Published var volume: Double
+
 	var id = UUID()
 	var type: TrackType
 	var number: Int
 
-	var name: LocalizedStringKey {
-		type.name(number)
-	}
-
-	init(_ type: TrackType, number: Int, isMuted: Bool = false) {
+	init(_ type: TrackType, number: Int, speed: Double, volume: Double, isMuted: Bool = false) {
 		self.type = type
 		self.number = number
+		self.speed = speed
+		self.volume = volume
 		self.isMuted = isMuted
+	}
+
+	var name: LocalizedStringKey {
+		type.name(number)
 	}
 }

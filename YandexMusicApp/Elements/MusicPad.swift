@@ -8,15 +8,30 @@
 import SwiftUI
 
 struct MusicPad: View {
+	@Binding var volume: CGFloat
+	@Binding var speed: CGFloat
+
 	private let leadingScaleCount = 26
 	private let bottomScaleCount = 26
 	private let bottomScalePower = 2
 
-	@State var scaleOffset = CGPoint.zero
 	@State var isMoving = false
 
     var body: some View {
 		GeometryReader { proxy in
+			let widthOffset = Constants.sliderWidth * 0.5
+
+			let scaleFrame = proxy.frame(in: .local)
+				.inset(by: .init(
+					top: 0,
+					left: Constants.sliderLeftBottomPadding,
+					bottom: Constants.sliderLeftBottomPadding,
+					right: 0
+				))
+				.insetBy(dx: widthOffset, dy: widthOffset)
+				.applying(.init(scaleX: speed, y: 1 - volume))
+			let scaleOffset = CGPoint(x: scaleFrame.width, y: scaleFrame.height)
+
 			ZStack {
 				LinearGradient(
 					colors: [Colors.padBackground.opacity(0), Colors.padBackground],
@@ -42,12 +57,12 @@ struct MusicPad: View {
 						}
 						.frame(height: isMoving ? 14 : 8)
 						.scaleEffect(x: -1, y: 1)
-						.padding(.leading, 25)
 						.padding(.horizontal, Constants.sliderCornerRadius)
 
 						Slider("speed")
 							.offset(x: scaleOffset.x)
 					}
+					.padding(.leading, Constants.sliderLeftBottomPadding)
 				}
 
 				HStack {
@@ -68,22 +83,28 @@ struct MusicPad: View {
 					}
 					Spacer()
 				}
-				.padding(.bottom, 25)
-			}
-			.onAppear {
-				scaleOffset = proxy.frame(in: .local).midPoint
+				.padding(.bottom, Constants.sliderLeftBottomPadding)
 			}
 			.gesture(
 				DragGesture(minimumDistance: 0, coordinateSpace: .local)
 					.onChanged { value in
-						let widthOffset = Constants.sliderWidth * 0.5
-
-						scaleOffset = proxy
+						let slidableFrame = proxy
 							.frame(in: .local)
 							.insetBy(dx: widthOffset, dy: widthOffset)
-							.inset(by: .init(top: 0, left: 25, bottom: 25, right: 0))
+							.inset(by: .init(
+								top: 0,
+								left: Constants.sliderLeftBottomPadding,
+								bottom: Constants.sliderLeftBottomPadding,
+								right: 0
+							))
+
+						let values = slidableFrame
 							.nearestPoint(to: value.location)
-							.applying(.init(translationX: -widthOffset, y: -widthOffset))
+							.applying(.init(translationX: -slidableFrame.minX, y: -slidableFrame.minY))
+							.applying(.init(scaleX: 1.0 / slidableFrame.width, y: 1.0 / slidableFrame.height))
+
+						speed = values.x
+						volume = 1 - values.y
 
 						if !isMoving {
 							withAnimation {
@@ -101,6 +122,15 @@ struct MusicPad: View {
     }
 }
 
+struct MusicPadPreview: View {
+	@State var volume: CGFloat = 1.0
+	@State var speed: CGFloat = 1.0
+
+	var body: some View {
+		MusicPad(volume: $volume, speed: $speed)
+	}
+}
+
 #Preview {
-    MusicPad()
+	MusicPadPreview()
 }

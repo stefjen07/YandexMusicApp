@@ -71,5 +71,8 @@ struct TrackView: View {
 }
 
 #Preview {
-	TrackView(.init(.instrument(.drums, sample: 1), number: 1), manager: .init())
+	TrackView(
+		.init(.instrument(.drums, sample: 1), number: 1, speed: 1, volume: 1),
+		manager: .init()
+	)
 }

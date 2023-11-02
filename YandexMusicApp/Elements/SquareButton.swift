@@ -19,6 +19,7 @@ struct SquareButton: View {
 	var body: some View {
 		Button(action: action, label: {
 			icon
+				.renderingMode(.template)
 				.frame(width: 34, height: 34)
 				.background(Colors.buttonBackground)
 				.cornerRadius(Constants.globalCornerRadius)

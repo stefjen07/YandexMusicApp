@@ -10,8 +10,11 @@ import SwiftUI
 struct ContentView: View {
 	let sampleManager: SampleManager = .init()
 	@ObservedObject var trackManager: TrackManager = .init()
+	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
 	@State var isDropdownMenuOpened = false
+	@State var isMicrophoneAlertPresented = false
+	@State var urlToShare: URL?
 	@State var openedInstrument: InstrumentType?
 
     var body: some View {
@@ -32,7 +35,7 @@ struct ContentView: View {
 					}
 				}
 
-				MusicPad()
+				MusicPad(volume: trackManager.volume, speed: trackManager.speed)
 					.padding(.top, 120)
 					.zIndex(-1)
 
@@ -75,17 +78,50 @@ struct ContentView: View {
 				Spacer()
 
 				SquareButton(Icons.microphone) {
-
+					if voiceRecorder.isAllowed {
+						if voiceRecorder.isRecording {
+							voiceRecorder.stopRecording()
+						} else {
+							voiceRecorder.startRecording(trackManager.nextNumber(for: nil)) { track in
+								//TODO: Implement
+							}
+						}
+					} else {
+						isMicrophoneAlertPresented = true
+					}
 				}
+				.foregroundStyle(voiceRecorder.isRecording ? .red : .black)
+				.alert(
+					"microphoneNotGranted",
+					isPresented: $isMicrophoneAlertPresented,
+					actions: {
+						Button("OK", action: {})
+					}
+				)
+
 				SquareButton(Icons.record) {
-
+					if trackManager.isFullRecording {
+						trackManager.stopFullRecording()
+					} else {
+						trackManager.startFullRecording { url in
+							urlToShare = url
+						}
+					}
 				}
-				SquareButton(Icons.play) {
+				.foregroundStyle(trackManager.isFullRecording ? .red : .black)
 
+				SquareButton(trackManager.isFullPlaying ? Icons.pause : Icons.play) {
+					if trackManager.isFullPlaying {
+						trackManager.stopCombinedTracks()
+					} else {
+						trackManager.playCombinedTracks()
+					}
 				}
 			}
+			.foregroundStyle(.black)
         }
 		.padding(15)
+		.documentInteractionCover($urlToShare)
     }
 }
 
