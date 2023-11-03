@@ -17,13 +17,16 @@ class TrackManager: ObservableObject {
 	}
 	@Published var selectedTrack: Track?
 
+	@Published var audioWave: [CGFloat] = []
+
 	@Published var isFullPlaying = false
 	@Published var isFullRecording = false
 
 	@Published var defaultVolume: CGFloat = 1
 	@Published var defaultSpeed: CGFloat = 1
 
-	private let trackCombiner: TrackCombinerProtocol = TrackCombiner()
+	private var trackCombiner: TrackCombinerProtocol = TrackCombiner()
+	private let trackWaveGenerator: TrackWaveGenerator = .init()
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
 	private var trackPlayer: AVQueuePlayer?
 	private var looper: AVPlayerLooper?
@@ -50,6 +53,16 @@ class TrackManager: ObservableObject {
 
 			defaultSpeed = $0
 		})
+	}
+
+	init() {
+		trackCombiner.bufferHandler = { [unowned self] in
+			if let value = trackWaveGenerator.processAudioData(buffer: $0) {
+				DispatchQueue.main.async { [unowned self] in
+					audioWave.append(CGFloat(value))
+				}
+			}
+		}
 	}
 
 	func nextNumber(for instrument: InstrumentType?) -> Int {
@@ -97,9 +110,17 @@ class TrackManager: ObservableObject {
 		tracks.removeAll(where: { $0.id == id })
 	}
 
+	func beforePlayingSwitch() {
+		nowPlayingTrack = nil
+		isFullPlaying = false
+		isFullRecording = false
+		audioWave = []
+	}
+
 	func handleNowPlayingTrack() {
 		DispatchQueue.main.async { [unowned self] in
 			if let nowPlayingTrack, let url = nowPlayingTrack.getUrl(sampleRepository: sampleRepository) {
+				beforePlayingSwitch()
 				let item = AVPlayerItem(url: url)
 				trackPlayer = AVQueuePlayer(playerItem: item)
 
@@ -119,6 +140,7 @@ class TrackManager: ObservableObject {
 
 	func playCombinedTracks() {
 		DispatchQueue.main.async { [unowned self] in
+			beforePlayingSwitch()
 			trackCombiner.playCombinedTracks(tracks)
 			isFullPlaying = true
 		}
@@ -133,6 +155,7 @@ class TrackManager: ObservableObject {
 
 	func startFullRecording(completionHandler: @escaping (URL) -> Void) {
 		DispatchQueue.main.async { [unowned self] in
+			beforePlayingSwitch()
 			trackCombiner.playAndRecordCombinedTracks(tracks, completionHandler: completionHandler)
 			isFullRecording = true
 		}

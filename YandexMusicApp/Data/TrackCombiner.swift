@@ -9,6 +9,8 @@ import Foundation
 import AVFoundation
 
 protocol TrackCombinerProtocol {
+	var bufferHandler: ((AVAudioPCMBuffer) -> Void)? { get set }
+
 	func playCombinedTracks(_ tracks: [Track])
 	func playAndRecordCombinedTracks(_ tracks: [Track], completionHandler: @escaping (URL) -> Void)
 	func stopCombinedTracks()
@@ -17,6 +19,7 @@ protocol TrackCombinerProtocol {
 class TrackCombiner: TrackCombinerProtocol {
 	private var engine = AVAudioEngine()
 
+	var bufferHandler: ((AVAudioPCMBuffer) -> Void)?
 	private var writingHandler: ((URL) -> Void)?
 
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
@@ -69,6 +72,10 @@ class TrackCombiner: TrackCombinerProtocol {
 		guard !engine.attachedNodes.isEmpty else { return }
 
 		do {
+			engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
+				bufferHandler?(buffer)
+			}
+
 			engine.prepare()
 			try engine.start()
 
@@ -109,11 +116,12 @@ class TrackCombiner: TrackCombinerProtocol {
 
 				if let audioConverter = AVAudioConverter(from: recordingFormat, to: outputFormat) {
 					audioConverter.channelMap = [0]
-					engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { buffer, time in
+					engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
 						do {
 							if let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: buffer.frameCapacity) {
 								try audioConverter.convert(to: convertedBuffer, from: buffer)
 								try file.write(from: convertedBuffer)
+								bufferHandler?(convertedBuffer)
 							}
 						} catch {
 							print(error)

@@ -72,6 +72,22 @@ struct ContentView: View {
 				}
 			}
 
+			GeometryReader { proxy in
+				let linesCount = Int(proxy.size.width / (2 + 2)) + 1
+
+				HStack(alignment: .center, spacing: 0) {
+					Spacer(minLength: 0)
+						.padding(.trailing, -2)
+					ForEach(trackManager.audioWave.suffix(linesCount), id: \.self) {
+						Color.primary
+							.frame(width: 2, height: $0)
+							.clipShape(Capsule())
+							.padding(.leading, 2)
+					}
+				}
+			}
+			.frame(height: 50)
+
 			HStack {
 				DropdownMenuButton("layers", isOpened: $isDropdownMenuOpened)
 

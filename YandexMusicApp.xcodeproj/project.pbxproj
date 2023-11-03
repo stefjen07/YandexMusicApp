@@ -13,6 +13,7 @@
 		3E84B9772AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */; };
 		3E84B9792AF30BEC00839021 /* DocumentInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */; };
 		3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B97C2AF3116200839021 /* URL+extension.swift */; };
+		3E84B97F2AF4746500839021 /* TrackWaveGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -75,6 +76,7 @@
 		3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+extension.swift"; sourceTree = "<group>"; };
 		3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInteractionView.swift; sourceTree = "<group>"; };
 		3E84B97C2AF3116200839021 /* URL+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+extension.swift"; sourceTree = "<group>"; };
+		3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackWaveGenerator.swift; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				3E84B9702AF2AAFB00839021 /* TrackManager.swift */,
 				3E84B9722AF2C27000839021 /* VoiceRecorder.swift */,
 				3E84B9742AF2F1A500839021 /* TrackCombiner.swift */,
+				3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				3E84B9772AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift in Sources */,
 				3EEE7E6D2AF047D900656070 /* InstrumentType.swift in Sources */,
 				3EEE7E712AF0481600656070 /* Icons.swift in Sources */,
+				3E84B97F2AF4746500839021 /* TrackWaveGenerator.swift in Sources */,
 				3EEE7E952AF1C5A300656070 /* SampleSelection.swift in Sources */,
 				3E84B9732AF2C27000839021 /* VoiceRecorder.swift in Sources */,
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
