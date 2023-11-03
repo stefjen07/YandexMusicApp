@@ -29,7 +29,10 @@ struct MusicPad: View {
 					right: 0
 				))
 				.insetBy(dx: widthOffset, dy: widthOffset)
-				.applying(.init(scaleX: speed, y: 1 - volume))
+				.applying(.init(
+					scaleX: Constants.speedRange.mapToIdentity(speed),
+					y: 1 - Constants.volumeRange.mapToIdentity(volume)
+				))
 			let scaleOffset = CGPoint(x: scaleFrame.width, y: scaleFrame.height)
 
 			ZStack {
@@ -103,8 +106,8 @@ struct MusicPad: View {
 							.applying(.init(translationX: -slidableFrame.minX, y: -slidableFrame.minY))
 							.applying(.init(scaleX: 1.0 / slidableFrame.width, y: 1.0 / slidableFrame.height))
 
-						speed = values.x
-						volume = 1 - values.y
+						speed = Constants.speedRange.mapFromIdentity(values.x)
+						volume = Constants.volumeRange.mapFromIdentity(1 - values.y)
 
 						if !isMoving {
 							withAnimation {

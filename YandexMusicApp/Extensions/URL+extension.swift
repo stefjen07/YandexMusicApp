@@ -12,3 +12,10 @@ extension URL: Identifiable {
 		absoluteString.hashValue
 	}
 }
+
+extension URL {
+	static var documentsDirectory: URL? {
+		let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+		return urls.first
+	}
+}

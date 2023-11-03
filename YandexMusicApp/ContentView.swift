@@ -82,8 +82,8 @@ struct ContentView: View {
 						if voiceRecorder.isRecording {
 							voiceRecorder.stopRecording()
 						} else {
-							voiceRecorder.startRecording(trackManager.nextNumber(for: nil)) { track in
-								//TODO: Implement
+							voiceRecorder.startRecording(trackManager.nextNumber(for: nil)) {
+								trackManager.createVoiceTrack()
 							}
 						}
 					} else {

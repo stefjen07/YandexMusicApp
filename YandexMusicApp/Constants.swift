@@ -14,5 +14,8 @@ class Constants {
 	static let sliderCornerRadius: CGFloat = globalCornerRadius
 	static let sliderLeftBottomPadding: CGFloat = 25
 
+	static let volumeRange: ClosedRange<CGFloat> = 0...1
+	static let speedRange: ClosedRange<CGFloat> = 0.3...3
+
 	static let instrumentButtonSize: CGFloat = 70
 }

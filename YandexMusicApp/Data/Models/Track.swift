@@ -48,4 +48,17 @@ class Track: ObservableObject, Identifiable {
 	var name: LocalizedStringKey {
 		type.name(number)
 	}
+
+	private func getVoiceUrl(_ id: Int) -> URL? {
+		URL.documentsDirectory?.appendingPathComponent("voice\(id)", conformingTo: .wav)
+	}
+
+	func getUrl(sampleRepository: SampleRepositoryProtocol) -> URL? {
+		switch type {
+		case .instrument(let instrumentType, let sample):
+			return sampleRepository.getSample(instrumentType, sample: sample)
+		case .voice:
+			return getVoiceUrl(number)
+		}
+	}
 }

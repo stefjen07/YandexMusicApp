@@ -18,3 +18,17 @@ extension ClosedRange {
 		}
 	}
 }
+
+extension ClosedRange where Bound == CGFloat {
+	var width: Bound {
+		upperBound - lowerBound
+	}
+
+	func mapFromIdentity(_ value: Bound) -> Bound {
+		return value * width + lowerBound
+	}
+
+	func mapToIdentity(_ value: Bound) -> Bound {
+		return (value - lowerBound) / width
+	}
+}

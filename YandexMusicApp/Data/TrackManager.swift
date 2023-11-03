@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 class TrackManager: ObservableObject {
 	@Published var tracks: [Track] = []
-	@Published var nowPlayingTrack: Track?
+	@Published var nowPlayingTrack: Track? {
+		didSet {
+			handleNowPlayingTrack()
+		}
+	}
 	@Published var selectedTrack: Track?
 
 	@Published var isFullPlaying = false
@@ -19,6 +24,9 @@ class TrackManager: ObservableObject {
 	@Published var defaultSpeed: CGFloat = 1
 
 	private let trackCombiner: TrackCombinerProtocol = TrackCombiner()
+	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
+	private var trackPlayer: AVQueuePlayer?
+	private var looper: AVPlayerLooper?
 
 	var volume: Binding<CGFloat> {
 		Binding(get: { [unowned self] in
@@ -87,6 +95,26 @@ class TrackManager: ObservableObject {
 
 	func removeTrack(id: UUID) {
 		tracks.removeAll(where: { $0.id == id })
+	}
+
+	func handleNowPlayingTrack() {
+		DispatchQueue.main.async { [unowned self] in
+			if let nowPlayingTrack, let url = nowPlayingTrack.getUrl(sampleRepository: sampleRepository) {
+				let item = AVPlayerItem(url: url)
+				trackPlayer = AVQueuePlayer(playerItem: item)
+
+				if let trackPlayer {
+					trackPlayer.volume = Float(nowPlayingTrack.volume)
+					looper = AVPlayerLooper(player: trackPlayer, templateItem: item)
+					trackPlayer.playImmediately(atRate: Float(nowPlayingTrack.speed))
+				}
+
+				nowPlayingTrack.isMuted = false
+			} else {
+				trackPlayer = nil
+				looper = nil
+			}
+		}
 	}
 
 	func playCombinedTracks() {

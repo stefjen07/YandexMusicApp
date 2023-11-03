@@ -30,44 +30,37 @@ class TrackCombiner: TrackCombinerProtocol {
 		engine = AVAudioEngine()
 
 		for track in tracks {
-			do {
-				var url: URL?
+			if !track.isMuted {
+				do {
+					if let url = track.getUrl(sampleRepository: sampleRepository) {
+						let playerNode = AVAudioPlayerNode()
+						let file = try AVAudioFile(forReading: url)
+						
+						if let fileBuffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: AVAudioFrameCount(file.length)) {
+							try file.read(into: fileBuffer)
+							
+							let changeAudioUnitTime = AVAudioUnitTimePitch()
+							changeAudioUnitTime.rate = Float(track.speed)
+							
+							engine.attach(playerNode)
+							engine.attach(changeAudioUnitTime)
 
-				switch track.type {
-				case .instrument(let instrumentType, let sample):
-					url = sampleRepository.getSample(instrumentType, sample: sample)
-				case .voice:
-					url = getDocumentsDirectory()?.appendingPathComponent("voice\(track.number)", conformingTo: .wav)
-				}
+							engine.connect(playerNode, to: changeAudioUnitTime, format: nil)
+							engine.connect(changeAudioUnitTime, to: engine.mainMixerNode, format: nil)
 
-				if let url {
-					let playerNode = AVAudioPlayerNode()
-					let file = try AVAudioFile(forReading: url)
-
-					if let fileBuffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: AVAudioFrameCount(file.length)) {
-						try file.read(into: fileBuffer)
-
-						let changeAudioUnitTime = AVAudioUnitTimePitch()
-						changeAudioUnitTime.rate = Float(track.speed)
-
-						engine.attach(playerNode)
-						engine.attach(changeAudioUnitTime)
-
-						engine.connect(playerNode, to: changeAudioUnitTime, format: file.processingFormat)
-						engine.connect(changeAudioUnitTime, to: engine.mainMixerNode, format: nil)
-
-						playerNode.scheduleBuffer(fileBuffer, at: nil, options: .loops, completionHandler: nil)
-						playerNode.volume = Float(track.volume)
+							playerNode.scheduleBuffer(fileBuffer, at: nil, options: .loops, completionHandler: nil)
+							playerNode.volume = Float(track.volume)
+						}
 					}
+				} catch {
+					print(error)
 				}
-			} catch {
-				print(error)
 			}
 		}
 	}
 
 	private var destinationUrl: URL? {
-		getDocumentsDirectory()?.appendingPathComponent("composition", conformingTo: .aiff)
+		URL.documentsDirectory?.appendingPathComponent("composition", conformingTo: .wav)
 	}
 
 	func playCombinedTracks(_ tracks: [Track]) {
@@ -99,7 +92,8 @@ class TrackCombiner: TrackCombinerProtocol {
 		let recordingFormat = engine.mainMixerNode.outputFormat(forBus: 0)
 
 		if let destinationUrl,
-		   let outputFormat = AVAudioFormat(commonFormat: .pcmFormatInt32, sampleRate: recordingFormat.sampleRate, channels: 1, interleaved: false)
+		   let outputFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: recordingFormat.sampleRate, channels: 2, interleaved: false),
+		   let sessionFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: AVAudioSession.sharedInstance().sampleRate, channels: 2, interleaved: false)
 		{
 			if FileManager.default.fileExists(atPath: destinationUrl.absoluteString) {
 				try? FileManager.default.removeItem(atPath: destinationUrl.absoluteString)
@@ -108,18 +102,14 @@ class TrackCombiner: TrackCombinerProtocol {
 			do {
 				let file = try AVAudioFile(
 					forWriting: destinationUrl,
-					settings: outputFormat.settings,
-					commonFormat: outputFormat.commonFormat,
-					interleaved: outputFormat.isInterleaved
+					settings: sessionFormat.settings,
+					commonFormat: sessionFormat.commonFormat,
+					interleaved: sessionFormat.isInterleaved
 				)
-
-				print(AVAudioSession.sharedInstance().sampleRate, recordingFormat.sampleRate)
-
-
 
 				if let audioConverter = AVAudioConverter(from: recordingFormat, to: outputFormat) {
 					audioConverter.channelMap = [0]
-					engine.mainMixerNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, time in
+					engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { buffer, time in
 						do {
 							if let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: buffer.frameCapacity) {
 								try audioConverter.convert(to: convertedBuffer, from: buffer)
