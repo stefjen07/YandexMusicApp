@@ -120,7 +120,6 @@ struct InstrumentButton: View {
 					LongPressGesture()
 						.onEnded { _ in
 							open()
-							print(1)
 						},
 					TapGesture()
 						.onEnded { _ in
@@ -136,7 +135,6 @@ struct InstrumentButton: View {
 									isTapped = false
 								}
 							}
-							print(2)
 						}
 				),
 				DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -163,7 +161,6 @@ struct InstrumentButton: View {
 						sampleManager.stopSamplePreview()
 
 						close()
-						print(3)
 					}
 			)
 		)

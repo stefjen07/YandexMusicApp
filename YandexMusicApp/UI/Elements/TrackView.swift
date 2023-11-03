@@ -11,9 +11,13 @@ struct TrackView: View {
 	@ObservedObject var track: Track
 	@ObservedObject var manager: TrackManager
 
-	init(_ track: Track, manager: TrackManager) {
+	@Binding var mainFrame: CGRect
+	@State var rowFrame: CGRect = .zero
+
+	init(_ track: Track, manager: TrackManager, mainFrame: Binding<CGRect>) {
 		self.track = track
 		self.manager = manager
+		self._mainFrame = mainFrame
 	}
 
 	var isSelected: Bool {
@@ -67,12 +71,32 @@ struct TrackView: View {
 		.background(isSelected ? Colors.selection : Colors.trackBackground)
 		.cornerRadius(Constants.globalCornerRadius)
 		.shadow(color: Color.gray, radius: 5)
+		.frame(height: 39)
+		.scaleEffect(scaleViewValue())
+		.offset(y: (1 - scaleViewValue()) * 39)
+		.background {
+			GeometryReader { proxy -> Color in
+				DispatchQueue.main.async {
+					rowFrame = proxy.frame(in: .global)
+				}
+
+				return Color.clear
+			}
+		}
+		.opacity(pow(scaleViewValue(), 3.0))
+	}
+
+	func scaleViewValue() -> CGFloat {
+		let scale = (rowFrame.maxY - mainFrame.minY - 10) / 39
+
+		return (CGFloat.zero...1).nearestValue(to: scale)
 	}
 }
 
 #Preview {
 	TrackView(
 		.init(.instrument(.drums, sample: 1), number: 1, speed: 1, volume: 1),
-		manager: .init()
+		manager: .init(),
+		mainFrame: .constant(.zero)
 	)
 }

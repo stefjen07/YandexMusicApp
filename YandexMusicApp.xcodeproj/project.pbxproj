@@ -14,6 +14,9 @@
 		3E84B9792AF30BEC00839021 /* DocumentInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */; };
 		3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B97C2AF3116200839021 /* URL+extension.swift */; };
 		3E84B97F2AF4746500839021 /* TrackWaveGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */; };
+		3E84B9842AF5369600839021 /* AudioWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9832AF5369600839021 /* AudioWaveView.swift */; };
+		3E84B9872AF5370700839021 /* TracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9862AF5370700839021 /* TracksView.swift */; };
+		3E84B9892AF5AD4900839021 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9882AF5AD4900839021 /* Array+extension.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -77,6 +80,9 @@
 		3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInteractionView.swift; sourceTree = "<group>"; };
 		3E84B97C2AF3116200839021 /* URL+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+extension.swift"; sourceTree = "<group>"; };
 		3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackWaveGenerator.swift; sourceTree = "<group>"; };
+		3E84B9832AF5369600839021 /* AudioWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveView.swift; sourceTree = "<group>"; };
+		3E84B9862AF5370700839021 /* TracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksView.swift; sourceTree = "<group>"; };
+		3E84B9882AF5AD4900839021 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -146,6 +152,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E84B9822AF5364B00839021 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE7E262AF00FAA00656070 /* ContentView.swift */,
+				3E84B9862AF5370700839021 /* TracksView.swift */,
+				3EEE7E882AF18F1300656070 /* Fonts */,
+				3EEE7E6F2AF047F600656070 /* Colors */,
+				3EEE7E6E2AF047EE00656070 /* Icons */,
+				3EEE7E692AF0478400656070 /* Elements */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		3EEE7E182AF00FAA00656070 = {
 			isa = PBXGroup;
 			children = (
@@ -168,17 +187,12 @@
 		3EEE7E232AF00FAA00656070 /* YandexMusicApp */ = {
 			isa = PBXGroup;
 			children = (
+				3E84B9822AF5364B00839021 /* UI */,
 				3EEE7E812AF06AE500656070 /* Extensions */,
-				3EEE7E882AF18F1300656070 /* Fonts */,
-				3EEE7E6F2AF047F600656070 /* Colors */,
-				3EEE7E6E2AF047EE00656070 /* Icons */,
-				3EEE7E692AF0478400656070 /* Elements */,
 				3EEE7E7E2AF048F400656070 /* Data */,
 				3EEE7E512AF0406700656070 /* Samples */,
 				3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */,
 				3EEE7E902AF194D500656070 /* Constants.swift */,
-				3EEE7E262AF00FAA00656070 /* ContentView.swift */,
-				3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */,
 				3EEE7E352AF00FAC00656070 /* YandexMusicAppTests */,
 				3EEE7E282AF00FAC00656070 /* Assets.xcassets */,
 				3EEE7E8F2AF18FE200656070 /* Info.plist */,
@@ -263,6 +277,8 @@
 				3EEE7E782AF048C000656070 /* TrackView.swift */,
 				3EEE7E7F2AF04FD900656070 /* MusicPad.swift */,
 				3EEE7E862AF06B1E00656070 /* Slider.swift */,
+				3E84B9782AF30BEC00839021 /* DocumentInteractionView.swift */,
+				3E84B9832AF5369600839021 /* AudioWaveView.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -306,6 +322,7 @@
 				3EEE7E842AF06B0A00656070 /* ClosedRange+extension.swift */,
 				3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */,
 				3E84B97C2AF3116200839021 /* URL+extension.swift */,
+				3E84B9882AF5AD4900839021 /* Array+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +502,8 @@
 				3E84B9752AF2F1A500839021 /* TrackCombiner.swift in Sources */,
 				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
 				3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */,
+				3E84B9842AF5369600839021 /* AudioWaveView.swift in Sources */,
+				3E84B9872AF5370700839021 /* TracksView.swift in Sources */,
 				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
 				3EEE7E7D2AF048ED00656070 /* Track.swift in Sources */,
 				3EEE7E772AF0487A00656070 /* DropdownMenuButton.swift in Sources */,
@@ -505,6 +524,7 @@
 				3E84B9732AF2C27000839021 /* VoiceRecorder.swift in Sources */,
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
 				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
+				3E84B9892AF5AD4900839021 /* Array+extension.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

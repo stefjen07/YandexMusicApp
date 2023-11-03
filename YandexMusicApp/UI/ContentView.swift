@@ -17,76 +17,44 @@ struct ContentView: View {
 	@State var urlToShare: URL?
 	@State var openedInstrument: InstrumentType?
 
-    var body: some View {
+	var body: some View {
 		VStack(spacing: 21) {
-			ZStack(alignment: .top) {
-				HStack(alignment: .top) {
-					ForEach(InstrumentType.allCases) { instrument in
-						InstrumentButton(
-							instrument,
-							openedInstrument: $openedInstrument,
-							sampleManager: sampleManager,
-							trackManager: trackManager
-						)
+			GeometryReader { proxy in
+				ZStack(alignment: .top) {
+					HStack(alignment: .top) {
+						ForEach(InstrumentType.allCases) { instrument in
+							InstrumentButton(
+								instrument,
+								openedInstrument: $openedInstrument,
+								sampleManager: sampleManager,
+								trackManager: trackManager
+							)
 
-						if instrument != InstrumentType.allCases.last {
-							Spacer()
-						}
-					}
-				}
-
-				MusicPad(volume: trackManager.volume, speed: trackManager.speed)
-					.padding(.top, 120)
-					.zIndex(-1)
-
-				VStack(spacing: 7) {
-					Spacer()
-
-					if isDropdownMenuOpened {
-						Group {
-							if trackManager.tracks.isEmpty {
-								HStack {
-									Spacer()
-									Text("noLayersAdded")
-										.font(.ysTextBody)
-										.foregroundStyle(.black)
-									Spacer()
-								}
-								.padding()
-								.background(Colors.trackBackground)
-								.cornerRadius(Constants.globalCornerRadius)
-								.shadow(color: Color.gray, radius: 5)
-							} else {
-								VStack {
-									ForEach(trackManager.tracks) { track in
-										TrackView(track, manager: trackManager)
-									}
-								}
+							if instrument != InstrumentType.allCases.last {
+								Spacer()
 							}
 						}
-						.transition(
-							.move(edge: .bottom)
-								.combined(with: .opacity)
-						)
 					}
+
+					MusicPad(volume: trackManager.volume, speed: trackManager.speed)
+						.padding(.top, 120)
+
+					VStack(spacing: 7) {
+						Spacer()
+
+						if isDropdownMenuOpened {
+							TracksView(trackManager: trackManager)
+							.frame(maxHeight: proxy.size.height * 0.8, alignment: .bottom)
+							.fixedSize(horizontal: false, vertical: true)
+						}
+					}
+					.offset(y: Constants.audioWaveHeight + 21)
+					.zIndex(1000)
 				}
 			}
+			.zIndex(1000)
 
-			GeometryReader { proxy in
-				let linesCount = Int(proxy.size.width / (2 + 2)) + 1
-
-				HStack(alignment: .center, spacing: 0) {
-					Spacer(minLength: 0)
-						.padding(.trailing, -2)
-					ForEach(trackManager.audioWave.suffix(linesCount), id: \.self) {
-						Color.primary
-							.frame(width: 2, height: $0)
-							.clipShape(Capsule())
-							.padding(.leading, 2)
-					}
-				}
-			}
-			.frame(height: 50)
+			AudioWaveView(trackManager: trackManager)
 
 			HStack {
 				DropdownMenuButton("layers", isOpened: $isDropdownMenuOpened)
@@ -135,12 +103,12 @@ struct ContentView: View {
 				}
 			}
 			.foregroundStyle(.black)
-        }
+		}
 		.padding(15)
 		.documentInteractionCover($urlToShare)
-    }
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
 }

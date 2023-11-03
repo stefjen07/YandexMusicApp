@@ -17,5 +17,7 @@ class Constants {
 	static let volumeRange: ClosedRange<CGFloat> = 0...1
 	static let speedRange: ClosedRange<CGFloat> = 0.3...3
 
+	static let audioWaveHeight: CGFloat = 50
+
 	static let instrumentButtonSize: CGFloat = 70
 }
