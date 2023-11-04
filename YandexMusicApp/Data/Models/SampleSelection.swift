@@ -8,6 +8,6 @@
 import Foundation
 
 struct SampleSelection {
-	var instrument: InstrumentType
-	var sample: Int
+	let instrument: InstrumentType
+	let sample: Int
 }

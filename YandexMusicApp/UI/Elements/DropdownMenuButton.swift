@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DropdownMenuButton: View {
-	var title: LocalizedStringKey
+	let title: LocalizedStringKey
 	@Binding var isOpened: Bool
 
 	init(_ title: LocalizedStringKey, isOpened: Binding<Bool>) {

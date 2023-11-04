@@ -12,10 +12,10 @@ struct ContentView: View {
 	@ObservedObject var trackManager: TrackManager = .init()
 	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
-	@State var isDropdownMenuOpened = false
-	@State var isMicrophoneAlertPresented = false
-	@State var urlToShare: URL?
-	@State var openedInstrument: InstrumentType?
+	@State private var isDropdownMenuOpened = false
+	@State private var isMicrophoneAlertPresented = false
+	@State private var urlToShare: URL?
+	@State private var openedInstrument: InstrumentType?
 
 	var body: some View {
 		VStack(spacing: 21) {
@@ -43,7 +43,7 @@ struct ContentView: View {
 						Spacer()
 
 						if isDropdownMenuOpened {
-							TracksView(trackManager: trackManager)
+							TracksView(trackManager: trackManager, isPresented: $isDropdownMenuOpened)
 							.frame(maxHeight: proxy.size.height * 0.8, alignment: .bottom)
 							.fixedSize(horizontal: false, vertical: true)
 						}

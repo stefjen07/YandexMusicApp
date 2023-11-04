@@ -17,11 +17,12 @@ struct AudioWaveView: View {
 			HStack(alignment: .center, spacing: 0) {
 				Spacer(minLength: 0)
 					.padding(.trailing, -2)
-				ForEach(trackManager.audioWave.suffix(linesCount, filler: 1), id: \.self) {
+				ForEach(trackManager.audioWave.suffixWithIndices(linesCount, filler: 1), id: \.index) {
 					Color.primary
-						.frame(width: 2, height: $0)
+						.frame(width: 2, height: $0.value)
 						.clipShape(Capsule())
 						.padding(.leading, 2)
+						.transition(.identity)
 				}
 			}
 			.frame(height: Constants.audioWaveHeight)

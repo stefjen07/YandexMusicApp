@@ -22,13 +22,14 @@ class VoiceRecorder: NSObject, ObservableObject {
 		super.init()
 
 		do {
-			try recordingSession.setCategory(.playAndRecord, mode: .default)
+			try recordingSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.interruptSpokenAudioAndMixWithOthers, .allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
 			try recordingSession.setActive(true)
-			recordingSession.requestRecordPermission() { [unowned self] in
-				isAllowed = $0
-			}
 		} catch {
 			print(error)
+		}
+
+		recordingSession.requestRecordPermission() { [unowned self] in
+			isAllowed = $0
 		}
 	}
 

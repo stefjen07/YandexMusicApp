@@ -17,7 +17,7 @@ protocol TrackCombinerProtocol {
 }
 
 class TrackCombiner: TrackCombinerProtocol {
-	private var engine = AVAudioEngine()
+	private var engine: AVAudioEngine!
 
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)?
 	private var writingHandler: ((URL) -> Void)?
@@ -38,13 +38,13 @@ class TrackCombiner: TrackCombinerProtocol {
 					if let url = track.getUrl(sampleRepository: sampleRepository) {
 						let playerNode = AVAudioPlayerNode()
 						let file = try AVAudioFile(forReading: url)
-						
+
 						if let fileBuffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: AVAudioFrameCount(file.length)) {
 							try file.read(into: fileBuffer)
-							
+
 							let changeAudioUnitTime = AVAudioUnitTimePitch()
 							changeAudioUnitTime.rate = Float(track.speed)
-							
+
 							engine.attach(playerNode)
 							engine.attach(changeAudioUnitTime)
 
@@ -67,85 +67,89 @@ class TrackCombiner: TrackCombinerProtocol {
 	}
 
 	func playCombinedTracks(_ tracks: [Track]) {
-		combineTracks(tracks)
+		DispatchQueue.main.async { [unowned self] in
+			combineTracks(tracks)
 
-		guard !engine.attachedNodes.isEmpty else { return }
-
-		do {
-			engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
-				bufferHandler?(buffer)
-			}
-
-			engine.prepare()
-			try engine.start()
-
-			for attachedNode in engine.attachedNodes {
-				if let playerNode = attachedNode as? AVAudioPlayerNode {
-					playerNode.play()
-				}
-			}
-		} catch {
-			print(error)
-		}
-	}
-
-	func playAndRecordCombinedTracks(_ tracks: [Track], completionHandler: @escaping (URL) -> Void) {
-		combineTracks(tracks)
-
-		guard !engine.attachedNodes.isEmpty else { return }
-
-		writingHandler = completionHandler
-
-		let recordingFormat = engine.mainMixerNode.outputFormat(forBus: 0)
-
-		if let destinationUrl,
-		   let outputFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: recordingFormat.sampleRate, channels: 2, interleaved: false),
-		   let sessionFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: AVAudioSession.sharedInstance().sampleRate, channels: 2, interleaved: false)
-		{
-			if FileManager.default.fileExists(atPath: destinationUrl.absoluteString) {
-				try? FileManager.default.removeItem(atPath: destinationUrl.absoluteString)
-			}
+			guard !engine.attachedNodes.isEmpty else { return }
 
 			do {
-				let file = try AVAudioFile(
-					forWriting: destinationUrl,
-					settings: sessionFormat.settings,
-					commonFormat: sessionFormat.commonFormat,
-					interleaved: sessionFormat.isInterleaved
-				)
+				engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
+					bufferHandler?(buffer)
+				}
 
-				if let audioConverter = AVAudioConverter(from: recordingFormat, to: outputFormat) {
-					audioConverter.channelMap = [0]
-					engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
-						do {
-							if let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: buffer.frameCapacity) {
-								try audioConverter.convert(to: convertedBuffer, from: buffer)
-								try file.write(from: convertedBuffer)
-								bufferHandler?(convertedBuffer)
-							}
-						} catch {
-							print(error)
-						}
+				engine.prepare()
+				try engine.start()
+
+				for attachedNode in engine.attachedNodes {
+					if let playerNode = attachedNode as? AVAudioPlayerNode {
+						playerNode.play()
 					}
 				}
 			} catch {
 				print(error)
 			}
 		}
+	}
 
+	func playAndRecordCombinedTracks(_ tracks: [Track], completionHandler: @escaping (URL) -> Void) {
+		DispatchQueue.main.async { [unowned self] in
+			combineTracks(tracks)
 
+			guard !engine.attachedNodes.isEmpty else { return }
 
-		do {
-			engine.prepare()
-			try engine.start()
+			writingHandler = completionHandler
 
-			for attachedNode in engine.attachedNodes {
-				if let playerNode = attachedNode as? AVAudioPlayerNode {
-					playerNode.play()
+			let recordingFormat = engine.mainMixerNode.outputFormat(forBus: 0)
+
+			if let destinationUrl,
+			   let outputFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: recordingFormat.sampleRate, channels: 2, interleaved: false),
+			   let sessionFormat = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: AVAudioSession.sharedInstance().sampleRate, channels: 2, interleaved: false)
+			{
+				if FileManager.default.fileExists(atPath: destinationUrl.absoluteString) {
+					try? FileManager.default.removeItem(atPath: destinationUrl.absoluteString)
+				}
+
+				do {
+					let file = try AVAudioFile(
+						forWriting: destinationUrl,
+						settings: sessionFormat.settings,
+						commonFormat: sessionFormat.commonFormat,
+						interleaved: sessionFormat.isInterleaved
+					)
+
+					if let audioConverter = AVAudioConverter(from: recordingFormat, to: outputFormat) {
+						audioConverter.channelMap = [0]
+						engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
+							do {
+								if let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: buffer.frameCapacity) {
+									try audioConverter.convert(to: convertedBuffer, from: buffer)
+									try file.write(from: convertedBuffer)
+									bufferHandler?(convertedBuffer)
+								}
+							} catch {
+								print(error)
+							}
+						}
+					}
+				} catch {
+					print(error)
 				}
 			}
-		} catch {
-			print(error)
+
+
+
+			do {
+				engine.prepare()
+				try engine.start()
+
+				for attachedNode in engine.attachedNodes {
+					if let playerNode = attachedNode as? AVAudioPlayerNode {
+						playerNode.play()
+					}
+				}
+			} catch {
+				print(error)
+			}
 		}
 	}
 

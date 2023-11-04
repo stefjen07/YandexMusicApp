@@ -33,9 +33,9 @@ class Track: ObservableObject, Identifiable {
 	@Published var speed: Double
 	@Published var volume: Double
 
-	var id = UUID()
-	var type: TrackType
-	var number: Int
+	let id = UUID()
+	let type: TrackType
+	let number: Int
 
 	init(_ type: TrackType, number: Int, speed: Double, volume: Double, isMuted: Bool = false) {
 		self.type = type

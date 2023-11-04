@@ -152,7 +152,14 @@
       }
     },
     "OK" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
     },
     "sample %lld" : {
       "localizations" : {

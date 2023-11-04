@@ -12,7 +12,7 @@ struct TrackView: View {
 	@ObservedObject var manager: TrackManager
 
 	@Binding var mainFrame: CGRect
-	@State var rowFrame: CGRect = .zero
+	@State private var rowFrame: CGRect = .zero
 
 	init(_ track: Track, manager: TrackManager, mainFrame: Binding<CGRect>) {
 		self.track = track

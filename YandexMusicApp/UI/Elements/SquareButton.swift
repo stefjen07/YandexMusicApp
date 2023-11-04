@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SquareButton: View {
-	var icon: Image
-	var action: () -> Void
+	let icon: Image
+	let action: () -> Void
 
 	init(_ icon: Image, action: @escaping () -> Void) {
 		self.icon = icon

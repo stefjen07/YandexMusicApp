@@ -13,9 +13,16 @@ struct MusicPad: View {
 
 	private let leadingScaleCount = 26
 	private let bottomScaleCount = 26
-	private let bottomScalePower = 2
+	private let bottomScalePower: CGFloat = 2
 
-	@State var isMoving = false
+	@State private var isMoving = false
+
+	var bottomScaleValues: [CGFloat] {
+		return (0..<bottomScaleCount).map {
+			pow(CGFloat($0), bottomScalePower) /
+			pow(CGFloat(bottomScaleCount - 1), bottomScalePower)
+		}
+	}
 
     var body: some View {
 		GeometryReader { proxy in
@@ -47,13 +54,11 @@ struct MusicPad: View {
 					ZStack(alignment: .bottomLeading) {
 						GeometryReader { proxy in
 							ZStack {
-								ForEach(0..<bottomScaleCount) { i in
+								ForEach(bottomScaleValues, id: \.self) { value in
 									Color.primary
 										.frame(width: 1)
 										.offset(
-											x: proxy.size.width *
-											pow(CGFloat(i), CGFloat(bottomScalePower)) /
-											pow(CGFloat(bottomScaleCount - 1), CGFloat(bottomScalePower))
+											x: proxy.size.width * value
 										)
 								}
 							}
@@ -71,7 +76,7 @@ struct MusicPad: View {
 				HStack {
 					ZStack(alignment: .topLeading) {
 						VStack(alignment: .leading, spacing: 0) {
-							ForEach(0..<leadingScaleCount) { i in
+							ForEach(0..<leadingScaleCount, id: \.self) { i in
 								Color.primary
 									.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
 								if i != leadingScaleCount - 1 {
@@ -126,8 +131,8 @@ struct MusicPad: View {
 }
 
 struct MusicPadPreview: View {
-	@State var volume: CGFloat = 1.0
-	@State var speed: CGFloat = 1.0
+	@State private var volume: CGFloat = 1.0
+	@State private var speed: CGFloat = 1.0
 
 	var body: some View {
 		MusicPad(volume: $volume, speed: $speed)

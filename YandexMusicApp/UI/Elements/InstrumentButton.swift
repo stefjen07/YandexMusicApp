@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct InstrumentButton: View {
-	var instrument: InstrumentType
+	let instrument: InstrumentType
 
 	let sampleManager: SampleManager
 	@ObservedObject var trackManager: TrackManager
 	@Binding var openedInstrument: InstrumentType?
 
-	@State var highlightedSample: Int?
-	@State var recentSample: Int?
-	@State var isTapped = false
-	@State var sampleFrames: [Int: CGRect] = [:]
+	@State private var highlightedSample: Int?
+	@State private var recentSample: Int?
+	@State private var isTapped = false
+	@State private var sampleFrames: [Int: CGRect] = [:]
 
 	var isOpened: Bool {
 		instrument == openedInstrument
@@ -65,7 +65,7 @@ struct InstrumentButton: View {
 
 			if isOpened {
 				VStack(spacing: 0) {
-					ForEach(0..<3) { i in
+					ForEach(sampleManager.getSamplesIndices(instrument), id: \.self) { i in
 						HStack(spacing: 0) {
 							Spacer(minLength: 0)
 							Text("sample \(i+1)")
@@ -128,7 +128,9 @@ struct InstrumentButton: View {
 								isTapped = true
 							}
 
-							selectSample(recentSample ?? 0)
+							let sample = recentSample ?? 0
+							selectSample(sample)
+							sampleManager.playSamplePreview(instrument, sample: sample, duration: 5)
 
 							Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
 								withAnimation {
@@ -139,28 +141,32 @@ struct InstrumentButton: View {
 				),
 				DragGesture(minimumDistance: 0, coordinateSpace: .global)
 					.onChanged { value in
-						for i in 0..<3 {
-							if let frame = sampleFrames[i],
-							   frame.contains(value.location) {
-								if highlightedSample != i {
-									highlightedSample = i
-									sampleManager.playSamplePreview(instrument, sample: i)
+						if openedInstrument == instrument {
+							for i in sampleManager.getSamplesIndices(instrument) {
+								if let frame = sampleFrames[i],
+								   frame.contains(value.location) {
+									if highlightedSample != i {
+										highlightedSample = i
+										sampleManager.playSamplePreview(instrument, sample: i)
+									}
+
+									return
 								}
-
-								return
 							}
-						}
 
-						highlightedSample = nil
-						sampleManager.stopSamplePreview()
+							highlightedSample = nil
+							sampleManager.stopSamplePreview()
+						}
 					}
 					.onEnded { _ in
-						if let highlightedSample {
-							selectSample(highlightedSample)
-						}
-						sampleManager.stopSamplePreview()
+						if openedInstrument == instrument {
+							if let highlightedSample {
+								selectSample(highlightedSample)
+							}
+							sampleManager.stopSamplePreview()
 
-						close()
+							close()
+						}
 					}
 			)
 		)
@@ -168,7 +174,7 @@ struct InstrumentButton: View {
 }
 
 struct InstrumentButtonPreview: View {
-	@State var openedInstrument: InstrumentType?
+	@State private var openedInstrument: InstrumentType?
 
 	var body: some View {
 		InstrumentButton(

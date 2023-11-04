@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Slider: View {
-	var text: LocalizedStringKey
-	var isVertical: Bool
+	let text: LocalizedStringKey
+	let isVertical: Bool
 
 	private let width: CGFloat = Constants.sliderWidth
 	private let height: CGFloat = 14

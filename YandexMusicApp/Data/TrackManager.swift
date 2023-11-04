@@ -59,7 +59,9 @@ class TrackManager: ObservableObject {
 		trackCombiner.bufferHandler = { [unowned self] in
 			if let value = trackWaveGenerator.processAudioData(buffer: $0) {
 				DispatchQueue.main.async { [unowned self] in
-					audioWave.append(CGFloat(value))
+					withAnimation(.linear) {
+						audioWave.append(CGFloat(value))
+					}
 				}
 			}
 		}
@@ -107,6 +109,18 @@ class TrackManager: ObservableObject {
 	}
 
 	func removeTrack(id: UUID) {
+		if let index = tracks.firstIndex(where: { $0.id == id }) {
+			if case .voice = tracks[index].type,
+			   let url = tracks[index].getUrl(sampleRepository: sampleRepository) {
+				do {
+					try FileManager.default.removeItem(at: url)
+				} catch {
+					print(error)
+				}
+			}
+
+			tracks.remove(at: index)
+		}
 		tracks.removeAll(where: { $0.id == id })
 	}
 

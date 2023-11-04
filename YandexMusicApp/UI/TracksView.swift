@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TracksView: View {
 	@ObservedObject var trackManager: TrackManager
-	@State var mainFrame: CGRect = .zero
+	@State private var mainFrame: CGRect = .zero
+	@Binding var isPresented: Bool
 
     var body: some View {
 		ScrollView(.vertical, showsIndicators: false) {
@@ -30,12 +31,21 @@ struct TracksView: View {
 					VStack {
 						ForEach(trackManager.tracks) { track in
 							TrackView(track, manager: trackManager, mainFrame: $mainFrame)
+								.transition(
+									.move(edge: .bottom)
+										.combined(with: .opacity)
+								)
 						}
 					}
 				}
 			}
 			.padding(10)
 		}
+		.transition(
+			.move(edge: .bottom)
+				.combined(with: .opacity)
+		)
+		.padding(.horizontal, -10)
 		.overlay {
 			VStack {
 				Spacer()
@@ -49,20 +59,18 @@ struct TracksView: View {
 		}
 		.background {
 			GeometryReader { proxy -> Color in
-				DispatchQueue.main.async {
-					mainFrame = proxy.frame(in: .global)
+				if isPresented {
+					DispatchQueue.main.async {
+						mainFrame = proxy.frame(in: .global)
+					}
 				}
 
 				return Color.clear
 			}
 		}
-		.transition(
-			.move(edge: .bottom)
-			.combined(with: .opacity)
-		)
     }
 }
 
 #Preview {
-	TracksView(trackManager: .init())
+	TracksView(trackManager: .init(), isPresented: .constant(true))
 }
