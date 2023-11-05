@@ -18,16 +18,8 @@ struct MusicPad: View {
 	private let leadingScaleCount = 26
 	private let bottomScaleCount = 26
 	private let bottomScalePower: CGFloat = 2
-	private let dispatchGroup = DispatchGroup()
 
 	let trackManager: TrackManager
-
-	var bottomScaleValues: [CGFloat] {
-		return (0..<bottomScaleCount).map {
-			pow(CGFloat($0), bottomScalePower) /
-			pow(CGFloat(bottomScaleCount - 1), bottomScalePower)
-		}
-	}
 
     var body: some View {
 		GeometryReader { proxy in
@@ -58,20 +50,18 @@ struct MusicPad: View {
 					VStack {
 						Spacer()
 						ZStack(alignment: .bottomLeading) {
-							GeometryReader { proxy in
-								ZStack {
-									ForEach(bottomScaleValues, id: \.self) { value in
-										Color.primary
-											.frame(width: 1)
-											.offset(
-												x: proxy.size.width * value
-											)
-									}
+							Canvas { renderer, size in
+								var path = Path()
+
+								for i in 0..<bottomScaleCount {
+									let x = 0.5 + pow(CGFloat(i), bottomScalePower) / pow(CGFloat(bottomScaleCount - 1), bottomScalePower) * (size.width - 1)
+									path.move(to: .init(x: x, y: 0))
+									path.addLine(to: .init(x: x, y: size.height))
 								}
+
+								renderer.stroke(path, with: .color(.primary))
 							}
-							.frame(height: 8)
 							.frame(height: isMoving ? 14 : 8)
-							.animation(.easeInOut, value: isMoving)
 							.scaleEffect(x: -1, y: 1)
 							.padding(.horizontal, Constants.sliderCornerRadius)
 
@@ -83,15 +73,16 @@ struct MusicPad: View {
 
 					HStack {
 						ZStack(alignment: .topLeading) {
-							VStack(alignment: .leading, spacing: 0) {
-								ForEach(0..<leadingScaleCount, id: \.self) { i in
-									Color.primary
-										.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
-									if i != leadingScaleCount - 1 {
-										Spacer()
-									}
+							Canvas { renderer, size in
+								var path = Path()
+								for i in 0..<leadingScaleCount {
+									let y = 0.5 + CGFloat(i) / CGFloat(leadingScaleCount - 1) * (size.height - 1)
+									path.move(to: .init(x: 0, y: y))
+									path.addLine(to: .init(x: i % 5 == 0 ? 14 : 8, y: y))
 								}
+								renderer.stroke(path, with: .color(.primary))
 							}
+							.frame(width: 14)
 							.padding(.vertical, Constants.sliderCornerRadius)
 
 							Slider("volume", isVertical: true)

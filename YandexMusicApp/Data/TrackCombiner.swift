@@ -8,6 +8,7 @@
 import Foundation
 import AVFoundation
 import MediaPlayer
+import Combine
 
 protocol TrackCombinerProtocol {
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)? { get set }
@@ -23,6 +24,8 @@ class TrackCombiner: TrackCombinerProtocol {
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)?
 	private var writingHandler: ((URL) -> Void)?
 
+	private var cancellable: Set<AnyCancellable> = .init()
+
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
 
 	private func getDocumentsDirectory() -> URL? {
@@ -34,31 +37,37 @@ class TrackCombiner: TrackCombinerProtocol {
 		engine = AVAudioEngine()
 
 		for track in tracks {
-			if !track.isMuted {
-				do {
-					if let url = track.getUrl(sampleRepository: sampleRepository) {
-						let playerNode = AVAudioPlayerNode()
-						let file = try AVAudioFile(forReading: url)
+			do {
+				if let url = track.getUrl(sampleRepository: sampleRepository) {
+					let playerNode = AVAudioPlayerNode()
+					let file = try AVAudioFile(forReading: url)
 
-						if let fileBuffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: AVAudioFrameCount(file.length)) {
-							try file.read(into: fileBuffer)
+					if let fileBuffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: AVAudioFrameCount(file.length)) {
+						try file.read(into: fileBuffer)
 
-							let changeAudioUnitTime = AVAudioUnitTimePitch()
-							changeAudioUnitTime.rate = Float(track.speed)
+						let changeAudioUnitTime = AVAudioUnitTimePitch()
+						changeAudioUnitTime.rate = Float(track.speed)
 
-							engine.attach(playerNode)
-							engine.attach(changeAudioUnitTime)
+						engine.attach(playerNode)
+						engine.attach(changeAudioUnitTime)
 
-							engine.connect(playerNode, to: changeAudioUnitTime, format: nil)
-							engine.connect(changeAudioUnitTime, to: engine.mainMixerNode, format: nil)
+						engine.connect(playerNode, to: changeAudioUnitTime, format: nil)
+						engine.connect(changeAudioUnitTime, to: engine.mainMixerNode, format: nil)
 
-							playerNode.scheduleBuffer(fileBuffer, at: nil, options: .loops, completionHandler: nil)
-							playerNode.volume = Float(track.volume)
-						}
+						playerNode.scheduleBuffer(fileBuffer, at: nil, options: .loops, completionHandler: nil)
+						playerNode.volume = track.isMuted ? 0 : Float(track.volume)
+
+						track
+							.objectWillChange
+							.receive(on: RunLoop.main)
+							.sink {
+								playerNode.volume = track.isMuted ? 0 : Float(track.volume)
+							}
+							.store(in: &cancellable)
 					}
-				} catch {
-					print(error)
 				}
+			} catch {
+				print(error)
 			}
 		}
 	}
@@ -163,6 +172,8 @@ class TrackCombiner: TrackCombinerProtocol {
 	func stopCombinedTracks(withoutWriting: Bool) {
 		engine.mainMixerNode.removeTap(onBus: 0)
 		engine.stop()
+
+		cancellable.forEach { $0.cancel() }
 
 		DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .microseconds(100))) { [unowned self] in
 			if let destinationUrl, !withoutWriting {

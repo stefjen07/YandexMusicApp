@@ -43,7 +43,7 @@ struct ContentView: View {
 					.zIndex(2000)
 
 					MusicPad(volume: trackManager.volume, speed: trackManager.speed, trackManager: trackManager)
-						.disabled(isDropdownMenuOpened)
+						.disabled(isDropdownMenuOpened || trackManager.isFullPlaying || trackManager.isFullRecording)
 						.padding(.top, 120)
 
 					if isDropdownMenuOpened {

@@ -32,8 +32,7 @@ class TrackManager: ObservableObject {
 	private var trackStorage: TrackStoraging = TrackStorage()
 	private let sampleManager: SampleManagerProtocol
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
-	private var trackPlayer: AVQueuePlayer?
-	private var looper: AVPlayerLooper?
+	private var trackPlayer: AVAudioPlayer?
 	private var playerCancellable: AnyCancellable?
 
 	init(sampleManager: SampleManagerProtocol) {
@@ -144,7 +143,6 @@ class TrackManager: ObservableObject {
 	func beforePlayingSwitch() {
 		nowPlayingTrack = nil
 		trackPlayer = nil
-		looper = nil
 
 		trackCombiner.stopCombinedTracks(withoutWriting: true)
 		sampleManager.stopSamplePreview()
@@ -159,21 +157,26 @@ class TrackManager: ObservableObject {
 			if let url = track.getUrl(sampleRepository: sampleRepository) {
 				beforePlayingSwitch()
 				self.nowPlayingTrack = track
-				let item = AVPlayerItem(url: url)
-				trackPlayer = AVQueuePlayer(playerItem: item)
+				trackPlayer = try? AVAudioPlayer(contentsOf: url)
 
 				if let trackPlayer {
 					trackPlayer.volume = Float(track.volume)
+					trackPlayer.enableRate = true
+					trackPlayer.rate = Float(track.speed)
+
 					playerCancellable = track
 						.objectWillChange
-						.debounce(for: 0.05, scheduler: DispatchQueue.main)
+						.receive(on: RunLoop.main)
+						.throttle(for: 0.1, scheduler: DispatchQueue.main, latest: true)
 						.sink { _ in
 							trackPlayer.volume = Float(track.volume)
 							trackPlayer.rate = Float(track.speed)
 						}
 					MPVolumeView.setSuitableVolume()
-					looper = AVPlayerLooper(player: trackPlayer, templateItem: item)
-					trackPlayer.playImmediately(atRate: Float(track.speed))
+
+					trackPlayer.numberOfLoops = -1
+					trackPlayer.prepareToPlay()
+					trackPlayer.play()
 				}
 
 				track.isMuted = false
@@ -183,10 +186,9 @@ class TrackManager: ObservableObject {
 
 	func stopTrack() {
 		DispatchQueue.main.async { [unowned self] in
+			trackPlayer?.stop()
 			playerCancellable?.cancel()
 			nowPlayingTrack = nil
-			trackPlayer = nil
-			looper = nil
 		}
 	}
 
