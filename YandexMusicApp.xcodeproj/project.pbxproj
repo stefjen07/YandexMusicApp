@@ -21,7 +21,9 @@
 		3E84B98E2AF6A3D500839021 /* TrackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B98D2AF6A3D500839021 /* TrackStorage.swift */; };
 		3E84B9902AF6A53A00839021 /* TrackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B98F2AF6A53A00839021 /* TrackType.swift */; };
 		3E84B9922AF6A7A400839021 /* Track+DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9912AF6A7A400839021 /* Track+DB.swift */; };
-		3E84B9942AF7C03600839021 /* DisabledState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9932AF7C03600839021 /* DisabledState.swift */; };
+		3E84B9962AF7FBE000839021 /* MPVolumeView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9952AF7FBE000839021 /* MPVolumeView+extension.swift */; };
+		3E84B9982AF7FCD000839021 /* OutputFileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9972AF7FCD000839021 /* OutputFileType.swift */; };
+		3E84B99A2AF810C900839021 /* DispatchTimeInterval+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9992AF810C900839021 /* DispatchTimeInterval+extension.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -91,7 +93,9 @@
 		3E84B98D2AF6A3D500839021 /* TrackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackStorage.swift; sourceTree = "<group>"; };
 		3E84B98F2AF6A53A00839021 /* TrackType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackType.swift; sourceTree = "<group>"; };
 		3E84B9912AF6A7A400839021 /* Track+DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Track+DB.swift"; sourceTree = "<group>"; };
-		3E84B9932AF7C03600839021 /* DisabledState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledState.swift; sourceTree = "<group>"; };
+		3E84B9952AF7FBE000839021 /* MPVolumeView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MPVolumeView+extension.swift"; sourceTree = "<group>"; };
+		3E84B9972AF7FCD000839021 /* OutputFileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputFileType.swift; sourceTree = "<group>"; };
+		3E84B9992AF810C900839021 /* DispatchTimeInterval+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchTimeInterval+extension.swift"; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -333,6 +337,8 @@
 				3E84B9762AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift */,
 				3E84B97C2AF3116200839021 /* URL+extension.swift */,
 				3E84B9882AF5AD4900839021 /* Array+extension.swift */,
+				3E84B9952AF7FBE000839021 /* MPVolumeView+extension.swift */,
+				3E84B9992AF810C900839021 /* DispatchTimeInterval+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -361,7 +367,7 @@
 				3EEE7E7C2AF048ED00656070 /* Track.swift */,
 				3E84B9912AF6A7A400839021 /* Track+DB.swift */,
 				3E84B98F2AF6A53A00839021 /* TrackType.swift */,
-				3E84B9932AF7C03600839021 /* DisabledState.swift */,
+				3E84B9972AF7FCD000839021 /* OutputFileType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
 				3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */,
 				3E84B9922AF6A7A400839021 /* Track+DB.swift in Sources */,
+				3E84B99A2AF810C900839021 /* DispatchTimeInterval+extension.swift in Sources */,
 				3E84B9842AF5369600839021 /* AudioWaveView.swift in Sources */,
 				3E84B9872AF5370700839021 /* TracksView.swift in Sources */,
 				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
@@ -524,8 +531,10 @@
 				3E84B9792AF30BEC00839021 /* DocumentInteractionView.swift in Sources */,
 				3EEE7E872AF06B1E00656070 /* Slider.swift in Sources */,
 				3EEE7E7B2AF048D600656070 /* InstrumentButton.swift in Sources */,
+				3E84B9962AF7FBE000839021 /* MPVolumeView+extension.swift in Sources */,
 				3EEE7E732AF0482B00656070 /* Colors.swift in Sources */,
 				3EEE7E6B2AF047B700656070 /* SampleManager.swift in Sources */,
+				3E84B9982AF7FCD000839021 /* OutputFileType.swift in Sources */,
 				3EEE7E972AF1C66A00656070 /* SampleRepository.swift in Sources */,
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
 				3E84B98C2AF6A28700839021 /* Model.xcdatamodeld in Sources */,
@@ -540,7 +549,6 @@
 				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
 				3E84B9892AF5AD4900839021 /* Array+extension.swift in Sources */,
 				3E84B98E2AF6A3D500839021 /* TrackStorage.swift in Sources */,
-				3E84B9942AF7C03600839021 /* DisabledState.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

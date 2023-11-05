@@ -28,9 +28,10 @@ struct DropdownMenuButton: View {
 					.foregroundStyle(.black)
 				Icons.chevron(isOpened ? .down : .up)
 			}
-				.padding(10)
-				.background(isOpened ? Colors.selection : Colors.buttonBackground)
-				.cornerRadius(Constants.globalCornerRadius)
+			.padding(.horizontal, 10)
+			.frame(height: 34)
+			.background(isOpened ? Colors.selection : Colors.buttonBackground)
+			.cornerRadius(Constants.globalCornerRadius)
 		})
 	}
 }

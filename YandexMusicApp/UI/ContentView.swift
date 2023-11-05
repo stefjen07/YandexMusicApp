@@ -12,6 +12,7 @@ struct ContentView: View {
 	@ObservedObject var trackManager: TrackManager
 	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
+	@State private var outputFileType: OutputFileType = .current
 	@State private var isDropdownMenuOpened = false
 	@State private var isMicrophoneAlertPresented = false
 	@State private var urlToShare: URL?
@@ -41,7 +42,7 @@ struct ContentView: View {
 					}
 					.zIndex(2000)
 
-					MusicPad(volume: trackManager.volume, speed: trackManager.speed)
+					MusicPad(volume: trackManager.volume, speed: trackManager.speed, trackManager: trackManager)
 						.disabled(isDropdownMenuOpened)
 						.padding(.top, 120)
 
@@ -69,6 +70,21 @@ struct ContentView: View {
 
 				Spacer()
 
+				Button(action: {
+					outputFileType = outputFileType.next
+				}, label: {
+					Text(outputFileType.name)
+						.font(.ysTextBody)
+						.foregroundStyle(.black)
+						.padding(.horizontal, 10)
+						.frame(height: 34)
+						.background(Colors.buttonBackground)
+						.cornerRadius(Constants.globalCornerRadius)
+				})
+				.onChange(of: outputFileType) {
+					OutputFileType.current = $0
+				}
+
 				SquareButton(Icons.microphone) {
 					if voiceRecorder.isAllowed {
 						if voiceRecorder.isRecording {
@@ -82,6 +98,7 @@ struct ContentView: View {
 						isMicrophoneAlertPresented = true
 					}
 				}
+				.disabled(trackManager.isFullPlaying || trackManager.isFullRecording)
 				.foregroundStyle(voiceRecorder.isRecording ? .red : .black)
 				.alert(
 					"microphoneNotGranted",
@@ -100,6 +117,7 @@ struct ContentView: View {
 						}
 					}
 				}
+				.disabled(voiceRecorder.isRecording)
 				.foregroundStyle(trackManager.isFullRecording ? .red : .black)
 
 				SquareButton(trackManager.isFullPlaying ? Icons.pause : Icons.play) {
@@ -109,6 +127,7 @@ struct ContentView: View {
 						trackManager.playCombinedTracks()
 					}
 				}
+				.disabled(voiceRecorder.isRecording)
 			}
 			.foregroundStyle(.black)
 		}

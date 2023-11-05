@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AVFoundation
+import MediaPlayer
+import Combine
 
 class TrackManager: ObservableObject {
 	@Published var tracks: [Track] = [] {
@@ -32,6 +34,7 @@ class TrackManager: ObservableObject {
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
 	private var trackPlayer: AVQueuePlayer?
 	private var looper: AVPlayerLooper?
+	private var playerCancellable: AnyCancellable?
 
 	init(sampleManager: SampleManagerProtocol) {
 		self.sampleManager = sampleManager
@@ -115,6 +118,14 @@ class TrackManager: ObservableObject {
 	}
 
 	func removeTrack(id: UUID) {
+		if selectedTrack?.id == id {
+			selectedTrack = nil
+		}
+
+		if nowPlayingTrack?.id == id {
+			stopTrack()
+		}
+
 		if let index = tracks.firstIndex(where: { $0.id == id }) {
 			if case .voice = tracks[index].type,
 			   let url = tracks[index].getUrl(sampleRepository: sampleRepository) {
@@ -153,6 +164,14 @@ class TrackManager: ObservableObject {
 
 				if let trackPlayer {
 					trackPlayer.volume = Float(track.volume)
+					playerCancellable = track
+						.objectWillChange
+						.debounce(for: 0.05, scheduler: DispatchQueue.main)
+						.sink { _ in
+							trackPlayer.volume = Float(track.volume)
+							trackPlayer.rate = Float(track.speed)
+						}
+					MPVolumeView.setSuitableVolume()
 					looper = AVPlayerLooper(player: trackPlayer, templateItem: item)
 					trackPlayer.playImmediately(atRate: Float(track.speed))
 				}
@@ -164,6 +183,7 @@ class TrackManager: ObservableObject {
 
 	func stopTrack() {
 		DispatchQueue.main.async { [unowned self] in
+			playerCancellable?.cancel()
 			nowPlayingTrack = nil
 			trackPlayer = nil
 			looper = nil
@@ -180,7 +200,7 @@ class TrackManager: ObservableObject {
 
 	func stopCombinedTracks() {
 		DispatchQueue.main.async { [unowned self] in
-			trackCombiner.stopCombinedTracks(withoutWriting: false)
+			trackCombiner.stopCombinedTracks(withoutWriting: true)
 			isFullPlaying = false
 		}
 	}

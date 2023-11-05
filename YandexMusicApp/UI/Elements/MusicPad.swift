@@ -13,11 +13,14 @@ struct MusicPad: View {
 	@Binding var volume: CGFloat
 	@Binding var speed: CGFloat
 
+	@State private var isMoving = false
+
 	private let leadingScaleCount = 26
 	private let bottomScaleCount = 26
 	private let bottomScalePower: CGFloat = 2
+	private let dispatchGroup = DispatchGroup()
 
-	@State private var isMoving = false
+	let trackManager: TrackManager
 
 	var bottomScaleValues: [CGFloat] {
 		return (0..<bottomScaleCount).map {
@@ -66,7 +69,9 @@ struct MusicPad: View {
 									}
 								}
 							}
+							.frame(height: 8)
 							.frame(height: isMoving ? 14 : 8)
+							.animation(.easeInOut, value: isMoving)
 							.scaleEffect(x: -1, y: 1)
 							.padding(.horizontal, Constants.sliderCornerRadius)
 
@@ -118,14 +123,22 @@ struct MusicPad: View {
 						speed = Constants.speedRange.mapFromIdentity(values.x)
 						volume = Constants.volumeRange.mapFromIdentity(1 - values.y)
 
+						if trackManager.nowPlayingTrack == nil,
+						   let selectedTrack = trackManager.selectedTrack
+						{
+							trackManager.playTrack(selectedTrack)
+						}
+
 						if !isMoving {
-							withAnimation {
+							withAnimation(.linear(duration: Constants.sliderAnimationDuration)) {
 								isMoving = true
 							}
 						}
 					}
 					.onEnded { _ in
-						withAnimation {
+						trackManager.stopTrack()
+
+						withAnimation(.linear(duration: Constants.sliderAnimationDuration)) {
 							isMoving = false
 						}
 					}
@@ -139,7 +152,7 @@ struct MusicPadPreview: View {
 	@State private var speed: CGFloat = 1.0
 
 	var body: some View {
-		MusicPad(volume: $volume, speed: $speed)
+		MusicPad(volume: $volume, speed: $speed, trackManager: .init(sampleManager: SampleManager()))
 	}
 }
 

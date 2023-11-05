@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 
 protocol TrackCombinerProtocol {
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)? { get set }
@@ -63,7 +64,7 @@ class TrackCombiner: TrackCombinerProtocol {
 	}
 
 	private var destinationUrl: URL? {
-		URL.documentsDirectory?.appendingPathComponent("composition", conformingTo: .wav)
+		URL.documentsDirectory?.appendingPathComponent("composition", conformingTo: OutputFileType.current.utType)
 	}
 
 	func playCombinedTracks(_ tracks: [Track]) {
@@ -79,6 +80,8 @@ class TrackCombiner: TrackCombinerProtocol {
 
 				engine.prepare()
 				try engine.start()
+				
+				MPVolumeView.setSuitableVolume()
 
 				for attachedNode in engine.attachedNodes {
 					if let playerNode = attachedNode as? AVAudioPlayerNode {
@@ -143,6 +146,8 @@ class TrackCombiner: TrackCombinerProtocol {
 			do {
 				engine.prepare()
 				try engine.start()
+
+				MPVolumeView.setSuitableVolume()
 
 				for attachedNode in engine.attachedNodes {
 					if let playerNode = attachedNode as? AVAudioPlayerNode {

@@ -22,7 +22,7 @@ class VoiceRecorder: NSObject, ObservableObject {
 		super.init()
 
 		do {
-			try recordingSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.interruptSpokenAudioAndMixWithOthers, .allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
+			try recordingSession.setCategory(.playAndRecord, mode: .videoRecording, options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
 			try recordingSession.setActive(true)
 		} catch {
 			print(error)

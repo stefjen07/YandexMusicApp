@@ -13,6 +13,7 @@ class Constants {
 	static let sliderWidth: CGFloat = 70
 	static let sliderCornerRadius: CGFloat = globalCornerRadius
 	static let sliderLeftBottomPadding: CGFloat = 25
+	static let sliderAnimationDuration: CGFloat = 0.05
 
 	static let volumeRange: ClosedRange<CGFloat> = 0...1
 	static let speedRange: ClosedRange<CGFloat> = 0.3...3
