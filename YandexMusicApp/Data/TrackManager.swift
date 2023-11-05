@@ -9,7 +9,11 @@ import SwiftUI
 import AVFoundation
 
 class TrackManager: ObservableObject {
-	@Published var tracks: [Track] = []
+	@Published var tracks: [Track] = [] {
+		didSet {
+			trackStorage.tracks = tracks
+		}
+	}
 	@Published var nowPlayingTrack: Track? {
 		didSet {
 			handleNowPlayingTrack()
@@ -27,9 +31,24 @@ class TrackManager: ObservableObject {
 
 	private var trackCombiner: TrackCombinerProtocol = TrackCombiner()
 	private let trackWaveGenerator: TrackWaveGenerator = .init()
+	private var trackStorage: TrackStoraging = TrackStorage()
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
 	private var trackPlayer: AVQueuePlayer?
 	private var looper: AVPlayerLooper?
+
+	init() {
+		trackCombiner.bufferHandler = { [unowned self] in
+			if let value = trackWaveGenerator.processAudioData(buffer: $0) {
+				DispatchQueue.main.async { [unowned self] in
+					withAnimation(.linear) {
+						audioWave.append(CGFloat(value))
+					}
+				}
+			}
+		}
+
+		tracks = trackStorage.tracks
+	}
 
 	var volume: Binding<CGFloat> {
 		Binding(get: { [unowned self] in
@@ -53,18 +72,6 @@ class TrackManager: ObservableObject {
 
 			defaultSpeed = $0
 		})
-	}
-
-	init() {
-		trackCombiner.bufferHandler = { [unowned self] in
-			if let value = trackWaveGenerator.processAudioData(buffer: $0) {
-				DispatchQueue.main.async { [unowned self] in
-					withAnimation(.linear) {
-						audioWave.append(CGFloat(value))
-					}
-				}
-			}
-		}
 	}
 
 	func nextNumber(for instrument: InstrumentType?) -> Int {

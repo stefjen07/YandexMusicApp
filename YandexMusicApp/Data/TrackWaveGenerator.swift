@@ -12,7 +12,7 @@ import Accelerate
 
 class TrackWaveGenerator {
 	private func rms(data: UnsafeMutablePointer<Float>, frameLength: UInt) -> Float {
-		var value : Float = 0
+		var value: Float = 0
 		vDSP_measqv(data, 1, &value, frameLength)
 		value *= 1000
 		return value

@@ -12,8 +12,26 @@ enum InstrumentType: String, Identifiable, CaseIterable {
 	case drums
 	case brass
 
+	init(id: Int) {
+		switch id {
+		case 1:
+			self = .guitar
+		case 2:
+			self = .drums
+		default:
+			self = .brass
+		}
+	}
+
 	var id: Int {
-		hashValue
+		switch self {
+		case .guitar:
+			1
+		case .drums:
+			2
+		case .brass:
+			3
+		}
 	}
 
 	var icon: Image {

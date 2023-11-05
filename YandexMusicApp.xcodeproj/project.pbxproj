@@ -17,6 +17,10 @@
 		3E84B9842AF5369600839021 /* AudioWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9832AF5369600839021 /* AudioWaveView.swift */; };
 		3E84B9872AF5370700839021 /* TracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9862AF5370700839021 /* TracksView.swift */; };
 		3E84B9892AF5AD4900839021 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9882AF5AD4900839021 /* Array+extension.swift */; };
+		3E84B98C2AF6A28700839021 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B98A2AF6A28700839021 /* Model.xcdatamodeld */; };
+		3E84B98E2AF6A3D500839021 /* TrackStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B98D2AF6A3D500839021 /* TrackStorage.swift */; };
+		3E84B9902AF6A53A00839021 /* TrackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B98F2AF6A53A00839021 /* TrackType.swift */; };
+		3E84B9922AF6A7A400839021 /* Track+DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84B9912AF6A7A400839021 /* Track+DB.swift */; };
 		3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */; };
 		3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE7E262AF00FAA00656070 /* ContentView.swift */; };
 		3EEE7E292AF00FAC00656070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EEE7E282AF00FAC00656070 /* Assets.xcassets */; };
@@ -83,6 +87,10 @@
 		3E84B9832AF5369600839021 /* AudioWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveView.swift; sourceTree = "<group>"; };
 		3E84B9862AF5370700839021 /* TracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksView.swift; sourceTree = "<group>"; };
 		3E84B9882AF5AD4900839021 /* Array+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
+		3E84B98B2AF6A28700839021 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		3E84B98D2AF6A3D500839021 /* TrackStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackStorage.swift; sourceTree = "<group>"; };
+		3E84B98F2AF6A53A00839021 /* TrackType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackType.swift; sourceTree = "<group>"; };
+		3E84B9912AF6A7A400839021 /* Track+DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Track+DB.swift"; sourceTree = "<group>"; };
 		3EEE7E212AF00FAA00656070 /* YandexMusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexMusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EEE7E242AF00FAA00656070 /* YandexMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexMusicApp.swift; sourceTree = "<group>"; };
 		3EEE7E262AF00FAA00656070 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -311,6 +319,8 @@
 				3E84B9722AF2C27000839021 /* VoiceRecorder.swift */,
 				3E84B9742AF2F1A500839021 /* TrackCombiner.swift */,
 				3E84B97E2AF4746500839021 /* TrackWaveGenerator.swift */,
+				3E84B98A2AF6A28700839021 /* Model.xcdatamodeld */,
+				3E84B98D2AF6A3D500839021 /* TrackStorage.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -349,6 +359,8 @@
 			children = (
 				3EEE7E6C2AF047D900656070 /* InstrumentType.swift */,
 				3EEE7E7C2AF048ED00656070 /* Track.swift */,
+				3E84B9912AF6A7A400839021 /* Track+DB.swift */,
+				3E84B98F2AF6A53A00839021 /* TrackType.swift */,
 				3EEE7E942AF1C5A300656070 /* SampleSelection.swift */,
 			);
 			path = Models;
@@ -498,10 +510,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEE7E272AF00FAA00656070 /* ContentView.swift in Sources */,
+				3E84B9902AF6A53A00839021 /* TrackType.swift in Sources */,
 				3E84B9712AF2AAFB00839021 /* TrackManager.swift in Sources */,
 				3E84B9752AF2F1A500839021 /* TrackCombiner.swift in Sources */,
 				3EEE7E912AF194D500656070 /* Constants.swift in Sources */,
 				3E84B97D2AF3116200839021 /* URL+extension.swift in Sources */,
+				3E84B9922AF6A7A400839021 /* Track+DB.swift in Sources */,
 				3E84B9842AF5369600839021 /* AudioWaveView.swift in Sources */,
 				3E84B9872AF5370700839021 /* TracksView.swift in Sources */,
 				3EEE7E852AF06B0A00656070 /* ClosedRange+extension.swift in Sources */,
@@ -514,6 +528,7 @@
 				3EEE7E6B2AF047B700656070 /* SampleManager.swift in Sources */,
 				3EEE7E972AF1C66A00656070 /* SampleRepository.swift in Sources */,
 				3EEE7E792AF048C000656070 /* TrackView.swift in Sources */,
+				3E84B98C2AF6A28700839021 /* Model.xcdatamodeld in Sources */,
 				3EEE7E832AF06AF700656070 /* CGRect+extension.swift in Sources */,
 				3EEE7E802AF04FD900656070 /* MusicPad.swift in Sources */,
 				3E84B9772AF2FF1700839021 /* AVAudioPCMBuffer+extension.swift in Sources */,
@@ -525,6 +540,7 @@
 				3EEE7E752AF0484C00656070 /* SquareButton.swift in Sources */,
 				3EEE7E8C2AF18F6900656070 /* Font+extension.swift in Sources */,
 				3E84B9892AF5AD4900839021 /* Array+extension.swift in Sources */,
+				3E84B98E2AF6A3D500839021 /* TrackStorage.swift in Sources */,
 				3EEE7E252AF00FAA00656070 /* YandexMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -886,6 +902,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3E84B98A2AF6A28700839021 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3E84B98B2AF6A28700839021 /* Model.xcdatamodel */,
+			);
+			currentVersion = 3E84B98B2AF6A28700839021 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3EEE7E192AF00FAA00656070 /* Project object */;
 }

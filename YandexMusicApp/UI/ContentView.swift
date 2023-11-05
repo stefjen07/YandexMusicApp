@@ -35,6 +35,7 @@ struct ContentView: View {
 							}
 						}
 					}
+					.zIndex(1000)
 
 					MusicPad(volume: trackManager.volume, speed: trackManager.speed)
 						.padding(.top, 120)

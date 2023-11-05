@@ -28,8 +28,10 @@ class VoiceRecorder: NSObject, ObservableObject {
 			print(error)
 		}
 
-		recordingSession.requestRecordPermission() { [unowned self] in
-			isAllowed = $0
+		recordingSession.requestRecordPermission() { isAllowed in
+			DispatchQueue.main.async { [unowned self] in
+				self.isAllowed = isAllowed
+			}
 		}
 	}
 

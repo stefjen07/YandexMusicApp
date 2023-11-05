@@ -129,11 +129,17 @@ struct InstrumentButton: View {
 							}
 
 							let sample = recentSample ?? 0
+							withAnimation {
+								highlightedSample = sample
+								openedInstrument = instrument
+							}
 							selectSample(sample)
 							sampleManager.playSamplePreview(instrument, sample: sample, duration: 5)
 
 							Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
 								withAnimation {
+									highlightedSample = nil
+									openedInstrument = nil
 									isTapped = false
 								}
 							}
