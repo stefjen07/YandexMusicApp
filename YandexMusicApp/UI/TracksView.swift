@@ -17,17 +17,21 @@ struct TracksView: View {
 		ScrollView(.vertical, showsIndicators: false) {
 			Group {
 				if trackManager.tracks.isEmpty {
-					HStack {
+					VStack {
 						Spacer()
-						Text("noLayersAdded")
-							.font(.ysTextBody)
-							.foregroundStyle(.black)
-						Spacer()
+						HStack {
+							Spacer()
+							Text("noLayersAdded")
+								.font(.ysTextBody)
+								.foregroundStyle(.black)
+							Spacer()
+						}
+						.padding()
+						.background(Colors.trackBackground)
+						.cornerRadius(Constants.globalCornerRadius)
+						.shadow(color: Color.gray, radius: 5)
 					}
-					.padding()
-					.background(Colors.trackBackground)
-					.cornerRadius(Constants.globalCornerRadius)
-					.shadow(color: Color.gray, radius: 5)
+					.frame(minHeight: mainFrame.height - 20)
 				} else {
 					VStack {
 						Spacer()

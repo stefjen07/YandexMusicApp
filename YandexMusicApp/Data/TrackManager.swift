@@ -135,7 +135,7 @@ class TrackManager: ObservableObject {
 		trackPlayer = nil
 		looper = nil
 
-		trackCombiner.stopCombinedTracks()
+		trackCombiner.stopCombinedTracks(withoutWriting: true)
 		sampleManager.stopSamplePreview()
 
 		isFullPlaying = false
@@ -180,7 +180,7 @@ class TrackManager: ObservableObject {
 
 	func stopCombinedTracks() {
 		DispatchQueue.main.async { [unowned self] in
-			trackCombiner.stopCombinedTracks()
+			trackCombiner.stopCombinedTracks(withoutWriting: false)
 			isFullPlaying = false
 		}
 	}
@@ -195,7 +195,7 @@ class TrackManager: ObservableObject {
 
 	func stopFullRecording() {
 		DispatchQueue.main.async { [unowned self] in
-			trackCombiner.stopCombinedTracks()
+			trackCombiner.stopCombinedTracks(withoutWriting: false)
 			isFullRecording = false
 		}
 	}

@@ -13,7 +13,7 @@ protocol TrackCombinerProtocol {
 
 	func playCombinedTracks(_ tracks: [Track])
 	func playAndRecordCombinedTracks(_ tracks: [Track], completionHandler: @escaping (URL) -> Void)
-	func stopCombinedTracks()
+	func stopCombinedTracks(withoutWriting: Bool)
 }
 
 class TrackCombiner: TrackCombinerProtocol {
@@ -119,12 +119,14 @@ class TrackCombiner: TrackCombinerProtocol {
 
 					if let audioConverter = AVAudioConverter(from: recordingFormat, to: outputFormat) {
 						audioConverter.channelMap = [0]
+
 						engine.mainMixerNode.installTap(onBus: 0, bufferSize: 4096, format: nil) { [unowned self] buffer, time in
+							bufferHandler?(buffer)
+							
 							do {
 								if let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: buffer.frameCapacity) {
 									try audioConverter.convert(to: convertedBuffer, from: buffer)
 									try file.write(from: convertedBuffer)
-									bufferHandler?(convertedBuffer)
 								}
 							} catch {
 								print(error)
@@ -153,12 +155,12 @@ class TrackCombiner: TrackCombinerProtocol {
 		}
 	}
 
-	func stopCombinedTracks() {
+	func stopCombinedTracks(withoutWriting: Bool) {
 		engine.mainMixerNode.removeTap(onBus: 0)
 		engine.stop()
 
 		DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .microseconds(100))) { [unowned self] in
-			if let destinationUrl {
+			if let destinationUrl, !withoutWriting {
 				writingHandler?(destinationUrl)
 				writingHandler = nil
 			}

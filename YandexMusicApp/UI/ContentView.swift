@@ -121,6 +121,11 @@ struct ContentView: View {
 				}
 			}
 		}
+		.onChange(of: isDropdownMenuOpened) {
+			if !$0 {
+				trackManager.stopTrack()
+			}
+		}
 	}
 }
 
