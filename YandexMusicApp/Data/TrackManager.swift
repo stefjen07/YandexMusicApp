@@ -14,11 +14,7 @@ class TrackManager: ObservableObject {
 			trackStorage.tracks = tracks
 		}
 	}
-	@Published var nowPlayingTrack: Track? {
-		didSet {
-			handleNowPlayingTrack()
-		}
-	}
+	@Published var nowPlayingTrack: Track?
 	@Published var selectedTrack: Track?
 
 	@Published var audioWave: [CGFloat] = []
@@ -30,13 +26,16 @@ class TrackManager: ObservableObject {
 	@Published var defaultSpeed: CGFloat = 1
 
 	private var trackCombiner: TrackCombinerProtocol = TrackCombiner()
-	private let trackWaveGenerator: TrackWaveGenerator = .init()
+	private let trackWaveGenerator: TrackWaveGeneratorProtocol = TrackWaveGenerator()
 	private var trackStorage: TrackStoraging = TrackStorage()
+	private let sampleManager: SampleManagerProtocol
 	private let sampleRepository: SampleRepositoryProtocol = SampleRepository()
 	private var trackPlayer: AVQueuePlayer?
 	private var looper: AVPlayerLooper?
 
-	init() {
+	init(sampleManager: SampleManagerProtocol) {
+		self.sampleManager = sampleManager
+
 		trackCombiner.bufferHandler = { [unowned self] in
 			if let value = trackWaveGenerator.processAudioData(buffer: $0) {
 				DispatchQueue.main.async { [unowned self] in
@@ -133,37 +132,49 @@ class TrackManager: ObservableObject {
 
 	func beforePlayingSwitch() {
 		nowPlayingTrack = nil
+		trackPlayer = nil
+		looper = nil
+
+		trackCombiner.stopCombinedTracks()
+		sampleManager.stopSamplePreview()
+
 		isFullPlaying = false
 		isFullRecording = false
 		audioWave = []
 	}
 
-	func handleNowPlayingTrack() {
+	func playTrack(_ track: Track) {
 		DispatchQueue.main.async { [unowned self] in
-			if let nowPlayingTrack, let url = nowPlayingTrack.getUrl(sampleRepository: sampleRepository) {
+			if let url = track.getUrl(sampleRepository: sampleRepository) {
 				beforePlayingSwitch()
+				self.nowPlayingTrack = track
 				let item = AVPlayerItem(url: url)
 				trackPlayer = AVQueuePlayer(playerItem: item)
 
 				if let trackPlayer {
-					trackPlayer.volume = Float(nowPlayingTrack.volume)
+					trackPlayer.volume = Float(track.volume)
 					looper = AVPlayerLooper(player: trackPlayer, templateItem: item)
-					trackPlayer.playImmediately(atRate: Float(nowPlayingTrack.speed))
+					trackPlayer.playImmediately(atRate: Float(track.speed))
 				}
 
-				nowPlayingTrack.isMuted = false
-			} else {
-				trackPlayer = nil
-				looper = nil
+				track.isMuted = false
 			}
+		}
+	}
+
+	func stopTrack() {
+		DispatchQueue.main.async { [unowned self] in
+			nowPlayingTrack = nil
+			trackPlayer = nil
+			looper = nil
 		}
 	}
 
 	func playCombinedTracks() {
 		DispatchQueue.main.async { [unowned self] in
 			beforePlayingSwitch()
-			trackCombiner.playCombinedTracks(tracks)
 			isFullPlaying = true
+			trackCombiner.playCombinedTracks(tracks)
 		}
 	}
 
@@ -177,8 +188,8 @@ class TrackManager: ObservableObject {
 	func startFullRecording(completionHandler: @escaping (URL) -> Void) {
 		DispatchQueue.main.async { [unowned self] in
 			beforePlayingSwitch()
-			trackCombiner.playAndRecordCombinedTracks(tracks, completionHandler: completionHandler)
 			isFullRecording = true
+			trackCombiner.playAndRecordCombinedTracks(tracks, completionHandler: completionHandler)
 		}
 	}
 

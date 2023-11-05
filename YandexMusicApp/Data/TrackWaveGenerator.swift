@@ -9,8 +9,11 @@ import Foundation
 import AVFoundation
 import Accelerate
 
+protocol TrackWaveGeneratorProtocol {
+	func processAudioData(buffer: AVAudioPCMBuffer) -> CGFloat?
+}
 
-class TrackWaveGenerator {
+class TrackWaveGenerator: TrackWaveGeneratorProtocol {
 	private func rms(data: UnsafeMutablePointer<Float>, frameLength: UInt) -> Float {
 		var value: Float = 0
 		vDSP_measqv(data, 1, &value, frameLength)
@@ -19,9 +22,7 @@ class TrackWaveGenerator {
 	}
 
 	private func normalizeSoundLevel(_ level: Float) -> CGFloat {
-		let level = max(0.2, CGFloat(level) + 70) / 2
-
-		return CGFloat(level * (40/35))
+		return max(0.2, CGFloat(level) + 70) / 2
 	}
 
 	func processAudioData(buffer: AVAudioPCMBuffer) -> CGFloat? {

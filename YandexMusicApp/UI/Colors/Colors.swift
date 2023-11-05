@@ -21,5 +21,6 @@ class Colors {
 	static let trackBackground = Color("track-background")
 	static let xmarkBackground = Color("xmark-background")
 	static let buttonBackground = Color("button-background")
+	static let disabledBackground = Color("disabled-background")
 	static let padBackground = Color("pad-background")
 }

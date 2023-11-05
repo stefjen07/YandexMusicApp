@@ -43,7 +43,11 @@ struct TrackView: View {
 				})
 
 				Button(action: {
-					manager.nowPlayingTrack = isNowPlaying ? nil : track
+					if isNowPlaying {
+						manager.stopTrack()
+					} else {
+						manager.playTrack(track)
+					}
 				}, label: {
 					isNowPlaying ? Icons.pause : Icons.play
 				})
@@ -96,7 +100,7 @@ struct TrackView: View {
 #Preview {
 	TrackView(
 		.init(.instrument(.drums, sample: 1), number: 1, speed: 1, volume: 1),
-		manager: .init(),
+		manager: .init(sampleManager: SampleManager()),
 		mainFrame: .constant(.zero)
 	)
 }

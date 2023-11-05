@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-	let sampleManager: SampleManager = .init()
-	@ObservedObject var trackManager: TrackManager = .init()
+	let sampleManager: SampleManagerProtocol = SampleManager()
+	@ObservedObject var trackManager: TrackManager
 	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
 	@State private var isDropdownMenuOpened = false
 	@State private var isMicrophoneAlertPresented = false
 	@State private var urlToShare: URL?
 	@State private var openedInstrument: InstrumentType?
+
+	init() {
+		self.trackManager = .init(sampleManager: sampleManager)
+	}
 
 	var body: some View {
 		VStack(spacing: 21) {
@@ -35,22 +39,25 @@ struct ContentView: View {
 							}
 						}
 					}
-					.zIndex(1000)
+					.zIndex(2000)
 
 					MusicPad(volume: trackManager.volume, speed: trackManager.speed)
+						.disabled(isDropdownMenuOpened)
 						.padding(.top, 120)
 
-					VStack(spacing: 7) {
-						Spacer()
-
-						if isDropdownMenuOpened {
-							TracksView(trackManager: trackManager, isPresented: $isDropdownMenuOpened)
-							.frame(maxHeight: proxy.size.height * 0.8, alignment: .bottom)
-							.fixedSize(horizontal: false, vertical: true)
+					if isDropdownMenuOpened {
+						VStack {
+							Spacer()
+							TracksView(
+								trackManager: trackManager,
+								isPresented: $isDropdownMenuOpened,
+								maxHeight: (proxy.size.height - 120) * 0.8
+							)
 						}
+						.offset(y: Constants.audioWaveHeight + 21)
+						.zIndex(1000)
 					}
-					.offset(y: Constants.audioWaveHeight + 21)
-					.zIndex(1000)
+
 				}
 			}
 			.zIndex(1000)
@@ -107,6 +114,13 @@ struct ContentView: View {
 		}
 		.padding(15)
 		.documentInteractionCover($urlToShare)
+		.onTapGesture {
+			if isDropdownMenuOpened {
+				withAnimation {
+					isDropdownMenuOpened = false
+				}
+			}
+		}
 	}
 }
 

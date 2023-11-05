@@ -10,7 +10,7 @@ import SwiftUI
 struct InstrumentButton: View {
 	let instrument: InstrumentType
 
-	let sampleManager: SampleManager
+	let sampleManager: SampleManagerProtocol
 	@ObservedObject var trackManager: TrackManager
 	@Binding var openedInstrument: InstrumentType?
 
@@ -21,6 +21,10 @@ struct InstrumentButton: View {
 
 	var isOpened: Bool {
 		instrument == openedInstrument
+	}
+
+	var isDisabled: Bool {
+		trackManager.isFullPlaying || trackManager.isFullRecording
 	}
 
 	func open() {
@@ -44,7 +48,7 @@ struct InstrumentButton: View {
 
 	init(_ instrument: InstrumentType, 
 		 openedInstrument: Binding<InstrumentType?>,
-		 sampleManager: SampleManager,
+		 sampleManager: SampleManagerProtocol,
 		 trackManager: TrackManager
 	) {
 		self.instrument = instrument
@@ -58,9 +62,17 @@ struct InstrumentButton: View {
 			instrument.icon
 				.resizable()
 				.frame(height: Constants.instrumentButtonSize)
-				.background(
-					isOpened ? .clear : (isTapped ? Colors.selection : Colors.buttonBackground)
-				)
+				.background { () -> Color in
+					if isDisabled {
+						return Colors.disabledBackground
+					}
+
+					if isOpened {
+						return .clear
+					}
+
+					return isTapped ? Colors.selection : Colors.buttonBackground
+				}
 				.clipShape(Circle())
 
 			if isOpened {
@@ -165,7 +177,7 @@ struct InstrumentButton: View {
 						}
 					}
 					.onEnded { _ in
-						if openedInstrument == instrument {
+						if openedInstrument == instrument && !isTapped {
 							if let highlightedSample {
 								selectSample(highlightedSample)
 							}
@@ -176,6 +188,7 @@ struct InstrumentButton: View {
 					}
 			)
 		)
+		.disabled(isDisabled)
 	}
 }
 
@@ -186,8 +199,8 @@ struct InstrumentButtonPreview: View {
 		InstrumentButton(
 			.guitar,
 			openedInstrument: $openedInstrument,
-			sampleManager: .init(),
-			trackManager: .init()
+			sampleManager: SampleManager(),
+			trackManager: .init(sampleManager: SampleManager())
 		)
 	}
 }

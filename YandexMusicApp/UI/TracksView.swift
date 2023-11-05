@@ -11,6 +11,7 @@ struct TracksView: View {
 	@ObservedObject var trackManager: TrackManager
 	@State private var mainFrame: CGRect = .zero
 	@Binding var isPresented: Bool
+	var maxHeight: CGFloat
 
     var body: some View {
 		ScrollView(.vertical, showsIndicators: false) {
@@ -29,6 +30,7 @@ struct TracksView: View {
 					.shadow(color: Color.gray, radius: 5)
 				} else {
 					VStack {
+						Spacer()
 						ForEach(trackManager.tracks) { track in
 							TrackView(track, manager: trackManager, mainFrame: $mainFrame)
 								.transition(
@@ -37,6 +39,7 @@ struct TracksView: View {
 								)
 						}
 					}
+					.frame(minHeight: mainFrame.height - 20)
 				}
 			}
 			.padding(10)
@@ -62,15 +65,23 @@ struct TracksView: View {
 				if isPresented {
 					DispatchQueue.main.async {
 						mainFrame = proxy.frame(in: .global)
+							.inset(by: .init(
+								top: proxy.size.height - maxHeight,
+								left: 0,
+								bottom: 0,
+								right: 0
+							))
 					}
 				}
 
 				return Color.clear
 			}
 		}
+		.frame(maxHeight: maxHeight, alignment: .bottom)
+		.fixedSize(horizontal: false, vertical: true)
     }
 }
 
 #Preview {
-	TracksView(trackManager: .init(), isPresented: .constant(true))
+	TracksView(trackManager: .init(sampleManager: SampleManager()), isPresented: .constant(true), maxHeight: 200)
 }

@@ -9,7 +9,14 @@ import Foundation
 import Combine
 import AVFoundation
 
-class SampleManager {
+protocol SampleManagerProtocol {
+	func playSamplePreview(_ instrument: InstrumentType, sample: Int)
+	func playSamplePreview(_ instrument: InstrumentType, sample: Int, duration: Double?)
+	func stopSamplePreview()
+	func getSamplesIndices(_ instrument: InstrumentType) -> [Int]
+}
+
+class SampleManager: SampleManagerProtocol {
 	private let avPlayer: AVPlayer
 	private let sampleRepository: SampleRepositoryProtocol
 
@@ -20,7 +27,11 @@ class SampleManager {
 		self.sampleRepository = sampleRepository
 	}
 
-	func playSamplePreview(_ instrument: InstrumentType, sample: Int, duration: Double? = nil) {
+	func playSamplePreview(_ instrument: InstrumentType, sample: Int) {
+		playSamplePreview(instrument, sample: sample, duration: nil)
+	}
+
+	func playSamplePreview(_ instrument: InstrumentType, sample: Int, duration: Double?) {
 		if let url = sampleRepository.getSample(instrument, sample: sample) {
 			playerTimer?.invalidate()
 			

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MusicPad: View {
+	@Environment(\.isEnabled) var isEnabled: Bool
+
 	@Binding var volume: CGFloat
 	@Binding var speed: CGFloat
 
@@ -49,52 +51,54 @@ struct MusicPad: View {
 					endPoint: .bottom
 				)
 
-				VStack {
-					Spacer()
-					ZStack(alignment: .bottomLeading) {
-						GeometryReader { proxy in
-							ZStack {
-								ForEach(bottomScaleValues, id: \.self) { value in
+				if isEnabled {
+					VStack {
+						Spacer()
+						ZStack(alignment: .bottomLeading) {
+							GeometryReader { proxy in
+								ZStack {
+									ForEach(bottomScaleValues, id: \.self) { value in
+										Color.primary
+											.frame(width: 1)
+											.offset(
+												x: proxy.size.width * value
+											)
+									}
+								}
+							}
+							.frame(height: isMoving ? 14 : 8)
+							.scaleEffect(x: -1, y: 1)
+							.padding(.horizontal, Constants.sliderCornerRadius)
+
+							Slider("speed")
+								.offset(x: scaleOffset.x)
+						}
+						.padding(.leading, Constants.sliderLeftBottomPadding)
+					}
+
+					HStack {
+						ZStack(alignment: .topLeading) {
+							VStack(alignment: .leading, spacing: 0) {
+								ForEach(0..<leadingScaleCount, id: \.self) { i in
 									Color.primary
-										.frame(width: 1)
-										.offset(
-											x: proxy.size.width * value
-										)
+										.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
+									if i != leadingScaleCount - 1 {
+										Spacer()
+									}
 								}
 							}
+							.padding(.vertical, Constants.sliderCornerRadius)
+
+							Slider("volume", isVertical: true)
+								.offset(y: scaleOffset.y)
 						}
-						.frame(height: isMoving ? 14 : 8)
-						.scaleEffect(x: -1, y: 1)
-						.padding(.horizontal, Constants.sliderCornerRadius)
-
-						Slider("speed")
-							.offset(x: scaleOffset.x)
+						Spacer()
 					}
-					.padding(.leading, Constants.sliderLeftBottomPadding)
+					.padding(.bottom, Constants.sliderLeftBottomPadding)
 				}
-
-				HStack {
-					ZStack(alignment: .topLeading) {
-						VStack(alignment: .leading, spacing: 0) {
-							ForEach(0..<leadingScaleCount, id: \.self) { i in
-								Color.primary
-									.frame(width: i % 5 == 0 ? 14 : 8, height: 1)
-								if i != leadingScaleCount - 1 {
-									Spacer()
-								}
-							}
-						}
-						.padding(.vertical, Constants.sliderCornerRadius)
-
-						Slider("volume", isVertical: true)
-							.offset(y: scaleOffset.y)
-					}
-					Spacer()
-				}
-				.padding(.bottom, Constants.sliderLeftBottomPadding)
 			}
 			.gesture(
-				DragGesture(minimumDistance: 0, coordinateSpace: .local)
+				DragGesture(minimumDistance: isEnabled ? 0 : .infinity, coordinateSpace: .local)
 					.onChanged { value in
 						let slidableFrame = proxy
 							.frame(in: .local)

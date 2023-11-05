@@ -32,5 +32,5 @@ struct AudioWaveView: View {
 }
 
 #Preview {
-	AudioWaveView(trackManager: .init())
+	AudioWaveView(trackManager: .init(sampleManager: SampleManager()))
 }

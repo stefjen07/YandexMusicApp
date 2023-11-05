@@ -17,7 +17,7 @@ protocol TrackCombinerProtocol {
 }
 
 class TrackCombiner: TrackCombinerProtocol {
-	private var engine: AVAudioEngine!
+	private var engine: AVAudioEngine = AVAudioEngine()
 
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)?
 	private var writingHandler: ((URL) -> Void)?
