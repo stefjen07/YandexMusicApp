@@ -11,7 +11,7 @@ import AVFoundation
 struct PlayerView: View {
 	@Environment(\.dismiss) var dismiss
 
-	var audioVisualizerManager: AudioVisualizerManager
+	@Binding var audioVisualizerManager: AudioVisualizerManager
 
 	@State private var isNameAlertPresented = false
 	@State private var newTrackName = String(localized: "newName")
@@ -40,13 +40,14 @@ struct PlayerView: View {
 		return true
 	}
 
-	init(trackManager: TrackManager, audioVisualizerManager: AudioVisualizerManager, recordedTrack: MusicTrack? = nil) {
-		self.audioVisualizerManager = audioVisualizerManager
+	init(trackManager: TrackManager, audioVisualizerManager: Binding<AudioVisualizerManager>, recordedTrack: MusicTrack? = nil, player: AVPlayer?) {
+		self._audioVisualizerManager = audioVisualizerManager
 		self.trackManager = trackManager
 
 		if let recordedTrack {
-			self.recordedTrackPlayer = AVPlayer(url: recordedTrack.url)
-			self.recordedTrackPlayer?.play()
+			self.recordedTrackPlayer = player
+
+			audioVisualizerManager.wrappedValue = .init(trackManager: trackManager, player: recordedTrackPlayer)
 
 			self.newTrackName = recordedTrack.name
 		}
@@ -156,6 +157,6 @@ struct PlayerView: View {
 
 #Preview {
 	PlayerView(
-		trackManager: .init(sampleManager: SampleManager()), audioVisualizerManager: .init(trackManager: .init(sampleManager: SampleManager()), player: nil)
+		trackManager: .init(sampleManager: SampleManager()), audioVisualizerManager: .constant(.init(trackManager: .init(sampleManager: SampleManager()), player: nil)), player: nil
 	)
 }

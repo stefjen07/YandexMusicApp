@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
 	let sampleManager: SampleManagerProtocol = SampleManager()
 	@ObservedObject var trackManager: TrackManager
-	@ObservedObject var audioVisualizerManager: AudioVisualizerManager
+	@State var audioVisualizerManager: AudioVisualizerManager
 	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
 	@State private var outputFileType: OutputFileType = .current
@@ -20,10 +21,12 @@ struct ContentView: View {
 	@State private var openedInstrument: InstrumentType?
 	@State private var isPlayerOpened = false
 
+	@State var recordedTrackPlayer: AVPlayer?
+
 	init() {
 		let trackManager = TrackManager(sampleManager: sampleManager)
 		self.trackManager = trackManager
-		self.audioVisualizerManager = .init(trackManager: trackManager, player: nil)
+		self._audioVisualizerManager = .init(initialValue: .init(trackManager: trackManager, player: nil))
 	}
 
 	var body: some View {
@@ -133,6 +136,7 @@ struct ContentView: View {
 					} else {
 						trackManager.startFullRecording { url in
 							recordedTrackUrl = url
+							recordedTrackPlayer = .init(url: url)
 							isPlayerOpened = true
 						}
 					}
@@ -166,12 +170,12 @@ struct ContentView: View {
 		}
 		.navigationDestination(isPresented: $isPlayerOpened) {
 			if let recordedTrackUrl {
-				PlayerView(trackManager: trackManager, audioVisualizerManager: audioVisualizerManager, recordedTrack: .init(url: recordedTrackUrl))
+				PlayerView(trackManager: trackManager, audioVisualizerManager: $audioVisualizerManager, recordedTrack: .init(url: recordedTrackUrl), player: recordedTrackPlayer)
 					.onDisappear {
 						self.recordedTrackUrl = nil
 					}
 			} else {
-				PlayerView(trackManager: trackManager, audioVisualizerManager: audioVisualizerManager)
+				PlayerView(trackManager: trackManager, audioVisualizerManager: $audioVisualizerManager, player: nil)
 			}
 		}
 	}
