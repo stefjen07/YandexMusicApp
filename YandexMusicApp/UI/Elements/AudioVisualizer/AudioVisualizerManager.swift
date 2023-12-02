@@ -21,9 +21,9 @@ class AudioVisualizerManager: ObservableObject {
 
 	var volume: Double {
 		if let player {
-			return isPaused ? 0 : Double(player.volume * 0.05)
+			return isPaused ? 0 : 1
 		} else {
-			return isPaused ? 0 : Double(trackManager.audioWave.last ?? 0)
+			return isPaused ? 0 : Double(trackManager.audioWave.last ?? 0) / 60
 		}
 	}
 
@@ -62,8 +62,7 @@ class AudioVisualizerManager: ObservableObject {
 					self.items[i].velocity += self.items[i].acceleration * 0.1
 					self.items[i].velocity = self.items[i].velocity.nearestPoint(xBounds: -0.2...0.2, yBounds: -0.2...0.2)
 
-					self.items[i].point += (self.items[i].velocity * (0.05 * self.volume))
-					print(self.volume)
+					self.items[i].point += (self.items[i].velocity * self.volume)
 
 					if !(CGFloat.zero...1).contains(self.items[i].point.x) || !(CGFloat.zero...1).contains(self.items[i].point.y) {
 						self.items[i].acceleration = .zero
@@ -72,7 +71,7 @@ class AudioVisualizerManager: ObservableObject {
 
 					self.items[i].point = self.items[i].point.nearestPoint(xBounds: 0...1, yBounds: 0...1)
 
-					self.items[i].rotation += (self.items[i].rotationSpeed * (0.05 * self.volume))
+					self.items[i].rotation += (self.items[i].rotationSpeed * self.volume)
 				}
 			}
 		}

@@ -11,6 +11,8 @@ import AVFoundation
 struct PlayerView: View {
 	@Environment(\.dismiss) var dismiss
 
+	var audioVisualizerManager: AudioVisualizerManager
+
 	@State private var isNameAlertPresented = false
 	@State private var newTrackName = String(localized: "newName")
 	@State private var currentTime = Double.zero
@@ -38,9 +40,9 @@ struct PlayerView: View {
 		return true
 	}
 
-	init(trackManager: TrackManager, recordedTrack: MusicTrack? = nil) {
+	init(trackManager: TrackManager, audioVisualizerManager: AudioVisualizerManager, recordedTrack: MusicTrack? = nil) {
+		self.audioVisualizerManager = audioVisualizerManager
 		self.trackManager = trackManager
-		self.recordedTrack = recordedTrack
 
 		if let recordedTrack {
 			self.recordedTrackPlayer = AVPlayer(url: recordedTrack.url)
@@ -48,6 +50,8 @@ struct PlayerView: View {
 
 			self.newTrackName = recordedTrack.name
 		}
+
+		self.recordedTrack = recordedTrack
 	}
 
     var body: some View {
@@ -73,7 +77,7 @@ struct PlayerView: View {
 				}
 			}
 
-			AudioVisualizerView(trackManager: trackManager, player: recordedTrackPlayer)
+			AudioVisualizerView(audioVisualizerManager: audioVisualizerManager)
 
 			if let recordedTrackPlayer {
 				Slider($currentTime, maximumValue: duration, onValueChanged: {
@@ -152,6 +156,6 @@ struct PlayerView: View {
 
 #Preview {
 	PlayerView(
-		trackManager: .init(sampleManager: SampleManager())
+		trackManager: .init(sampleManager: SampleManager()), audioVisualizerManager: .init(trackManager: .init(sampleManager: SampleManager()), player: nil)
 	)
 }

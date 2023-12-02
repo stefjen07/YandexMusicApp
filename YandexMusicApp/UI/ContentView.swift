@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
 	let sampleManager: SampleManagerProtocol = SampleManager()
 	@ObservedObject var trackManager: TrackManager
+	@ObservedObject var audioVisualizerManager: AudioVisualizerManager
 	@ObservedObject var voiceRecorder: VoiceRecorder = .init()
 
 	@State private var outputFileType: OutputFileType = .current
@@ -20,7 +21,9 @@ struct ContentView: View {
 	@State private var isPlayerOpened = false
 
 	init() {
-		self.trackManager = .init(sampleManager: sampleManager)
+		let trackManager = TrackManager(sampleManager: sampleManager)
+		self.trackManager = trackManager
+		self.audioVisualizerManager = .init(trackManager: trackManager, player: nil)
 	}
 
 	var body: some View {
@@ -163,12 +166,12 @@ struct ContentView: View {
 		}
 		.navigationDestination(isPresented: $isPlayerOpened) {
 			if let recordedTrackUrl {
-				PlayerView(trackManager: trackManager, recordedTrack: .init(url: recordedTrackUrl))
+				PlayerView(trackManager: trackManager, audioVisualizerManager: audioVisualizerManager, recordedTrack: .init(url: recordedTrackUrl))
 					.onDisappear {
 						self.recordedTrackUrl = nil
 					}
 			} else {
-				PlayerView(trackManager: trackManager)
+				PlayerView(trackManager: trackManager, audioVisualizerManager: audioVisualizerManager)
 			}
 		}
 	}

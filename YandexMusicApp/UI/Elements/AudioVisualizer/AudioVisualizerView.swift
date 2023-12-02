@@ -11,10 +11,6 @@ import AVFoundation
 struct AudioVisualizerView: View {
 	@ObservedObject var audioVisualizerManager: AudioVisualizerManager
 
-	init(trackManager: TrackManager, player: AVPlayer? = nil) {
-		self.audioVisualizerManager = .init(trackManager: trackManager, player: player)
-	}
-
     var body: some View {
 		VStack {
 			GeometryReader { proxy in
@@ -53,5 +49,5 @@ struct AudioVisualizerView: View {
 }
 
 #Preview {
-	AudioVisualizerView(trackManager: .init(sampleManager: SampleManager()))
+	AudioVisualizerView(audioVisualizerManager: .init(trackManager: .init(sampleManager: SampleManager()), player: nil))
 }
