@@ -21,6 +21,11 @@ class Icons {
 	static let unmute = Image("unmute")
 
 	static let xmark = Image("xmark")
+	static let arrow = Image("arrow")
+	static let download = Image("download")
+
+	static let rewindBack = Image("rewind.back")
+	static let rewindForward = Image("rewind.forward")
 
 	static private let chevronDown = Image("chevron")
 	static func chevron(_ direction: ChevronDirection) -> some View {

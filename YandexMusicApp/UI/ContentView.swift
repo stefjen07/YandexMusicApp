@@ -15,8 +15,9 @@ struct ContentView: View {
 	@State private var outputFileType: OutputFileType = .current
 	@State private var isDropdownMenuOpened = false
 	@State private var isMicrophoneAlertPresented = false
-	@State private var urlToShare: URL?
+	@State private var recordedTrackUrl: URL?
 	@State private var openedInstrument: InstrumentType?
+	@State private var isPlayerOpened = false
 
 	init() {
 		self.trackManager = .init(sampleManager: sampleManager)
@@ -42,9 +43,24 @@ struct ContentView: View {
 					}
 					.zIndex(2000)
 
-					MusicPad(volume: trackManager.volume, speed: trackManager.speed, trackManager: trackManager)
-						.disabled(isDropdownMenuOpened || trackManager.isFullPlaying || trackManager.isFullRecording)
-						.padding(.top, 120)
+					ZStack {
+						MusicPad(volume: trackManager.volume, speed: trackManager.speed, trackManager: trackManager)
+							.disabled(isDropdownMenuOpened || trackManager.isFullPlaying || trackManager.isFullRecording)
+							.padding(.top, 120)
+
+						if trackManager.isFullPlaying || trackManager.isFullRecording {
+							Button(action: {
+								isPlayerOpened = true
+							}, label: {
+								Text("goToVisualizer")
+									.foregroundStyle(Color.primary)
+									.font(.ysTextTitle)
+									.padding()
+									.background(Colors.selection)
+									.cornerRadius(6)
+							})
+						}
+					}
 
 					if isDropdownMenuOpened {
 						VStack {
@@ -113,7 +129,8 @@ struct ContentView: View {
 						trackManager.stopFullRecording()
 					} else {
 						trackManager.startFullRecording { url in
-							urlToShare = url
+							recordedTrackUrl = url
+							isPlayerOpened = true
 						}
 					}
 				}
@@ -132,7 +149,6 @@ struct ContentView: View {
 			.foregroundStyle(.black)
 		}
 		.padding(15)
-		.documentInteractionCover($urlToShare)
 		.onTapGesture {
 			if isDropdownMenuOpened {
 				withAnimation {
@@ -145,9 +161,21 @@ struct ContentView: View {
 				trackManager.stopTrack()
 			}
 		}
+		.navigationDestination(isPresented: $isPlayerOpened) {
+			if let recordedTrackUrl {
+				PlayerView(trackManager: trackManager, recordedTrack: .init(url: recordedTrackUrl))
+					.onDisappear {
+						self.recordedTrackUrl = nil
+					}
+			} else {
+				PlayerView(trackManager: trackManager)
+			}
+		}
 	}
 }
 
 #Preview {
-	ContentView()
+	NavigationStack {
+		ContentView()
+	}
 }

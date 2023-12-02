@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "2D" : {
+
+    },
+    "3D" : {
+
+    },
     "brass" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -63,6 +69,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ударные %lld"
+          }
+        }
+      }
+    },
+    "enterNewName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter new track name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите новое название трека"
+          }
+        }
+      }
+    },
+    "goToVisualizer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open visualizer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть визуализатор"
           }
         }
       }
@@ -134,6 +172,22 @@
         }
       }
     },
+    "newName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новое название"
+          }
+        }
+      }
+    },
     "noLayersAdded" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -153,6 +207,12 @@
     },
     "OK" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

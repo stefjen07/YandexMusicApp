@@ -12,6 +12,7 @@ import Combine
 
 protocol TrackCombinerProtocol {
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)? { get set }
+	var isPaused: Bool { get }
 
 	func playCombinedTracks(_ tracks: [Track])
 	func playAndRecordCombinedTracks(_ tracks: [Track], completionHandler: @escaping (URL) -> Void)
@@ -20,6 +21,8 @@ protocol TrackCombinerProtocol {
 
 class TrackCombiner: TrackCombinerProtocol {
 	private var engine: AVAudioEngine = AVAudioEngine()
+
+	var isPaused: Bool = false
 
 	var bufferHandler: ((AVAudioPCMBuffer) -> Void)?
 	private var writingHandler: ((URL) -> Void)?

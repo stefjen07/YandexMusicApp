@@ -65,7 +65,7 @@ struct MusicPad: View {
 							.scaleEffect(x: -1, y: 1)
 							.padding(.horizontal, Constants.sliderCornerRadius)
 
-							Slider("speed")
+							MusicPadSlider("speed")
 								.offset(x: scaleOffset.x)
 						}
 						.padding(.leading, Constants.sliderLeftBottomPadding)
@@ -85,7 +85,7 @@ struct MusicPad: View {
 							.frame(width: 14)
 							.padding(.vertical, Constants.sliderCornerRadius)
 
-							Slider("volume", isVertical: true)
+							MusicPadSlider("volume", isVertical: true)
 								.offset(y: scaleOffset.y)
 						}
 						Spacer()

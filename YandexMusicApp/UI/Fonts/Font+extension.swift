@@ -22,6 +22,7 @@ extension Font {
 		}
 	}
 
+	static let ysTextTitle = ysText(16)
 	static let ysTextBody = ysText(14)
 	static let ysTextSlider = ysText(12)
 }

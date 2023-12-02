@@ -23,4 +23,7 @@ class Colors {
 	static let buttonBackground = Color("button-background")
 	static let disabledBackground = Color("disabled-background")
 	static let padBackground = Color("pad-background")
+
+	static let minimumTrack = UIColor(named: "minimum-track")
+	static let maximumTrack = UIColor(named: "maximum-track")
 }
